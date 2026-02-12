@@ -4,7 +4,7 @@
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{booktabs}
-
+\usepackage{chngcntr}
 
 % Optional math commands from https://github.com/goodfeli/dlbook_notation.
 \input{math_commands.tex}
@@ -72,15 +72,19 @@ Campinas, SP, Brazil, 13083-896 \\
 \end{titlepage}
 
 
-% \begin{abstract}
+\begin{abstract}
+The use of plastic in agriculture has increased significantly in recent years, bringing both benefits and environmental challenges. While agricultural plastics improve crop yields and resource efficiency, they also lead to the accumulation of plastic waste in rural areas. Remote Sensing (RS) data, combined with advanced machine learning and computer vision techniques, provide an effective means to monitor plasticulture dynamics. Therefore, this research internship aims to explore RS anomaly detection (RSAD) techniques in time-series imagery and apply them to agricultural monitoring, particularly in detecting subtle cases that involve spectral changes such as material deterioration and pest-related disturbances. Therefore, I’ll join researchers at the University of Sheffield to learn RSAD techniques in the agriculture context and then explore whether they can be applied in plasticulture. In parallel, I’ll collaborate with researchers at the University of Sheffield and contribute to the PEZEGO pest-management app. The internship will provide hands-on experience in scalable application design, app optimization, and model integration, which can enhance our ongoing application, GeoHuman. The University of Sheffield was chosen due to its internationally recognized expertise in application development, machine learning, computer vision, and remote sensing. This experience will strengthen our project in Brazil by improving the accuracy and scalability of agricultural monitoring systems. Upon my return, I will disseminate the knowledge gained through workshops and collaborative activities with my research group at UNICAMP to fos	ter innovation and capacity building in remote sensing applications.
 
-% \end{abstract}
+\end{abstract}
 
     
 \section{Introduction}
 
+    In the context of learning anomaly detection techniques applied to remote sensing, the research objectives also align with the Brazil–UK–Africa collaboration “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming”, funded by UK Research and Innovation (UKRI).
+
+
     \subsection{Objectives}
-        This research internship focuses on the detection of anomalies in agricultural systems using time-series analysis of Sentinel-2 satellite imagery. The primary objectives are:
+        This research internship focuses on the detection of anomalies in agricultural systems using time-series analysis of Sentinel-2 satellite imagery.
 
         \begin{itemize}
             \item \textbf{Proof of Concept:} Verify if its possible to detect plastic deterioration in melon crops, using time-series analysis of Sentinel-2 imagery.
@@ -88,9 +92,7 @@ Campinas, SP, Brazil, 13083-896 \\
             \item \textbf{Algorithm Development:} Model anomaly detection algorithms capable of identifying both pest-net installations and pest infestation events in time-series satellite imagery.
         \end{itemize}
 
-        In the context of learning anomaly detection techniques applied to remote sensing, the research objectives also align with the Brazil–UK–Africa collaboration “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming”, funded by UK Research and Innovation (UKRI).
-
-        In terms of application development, the internship aims to contribute to the development of a mobile application that leverages the anomaly detection algorithms to provide real-time pest management recommendations to smallholder farmers in Ghana.
+        The internship also aims to contribute to the development of a mobile application that provide pest management recommendations to smallholder farmers.
 
         \begin{itemize}
             \item \textbf{Application Development:} Contribute to the development of a mobile application
@@ -105,7 +107,7 @@ Campinas, SP, Brazil, 13083-896 \\
     \subsection{Time-Series Definitions}
 
         \subsubsection{Univariate Time-Series (UTS)}
-            A univariate time-series represents a single variable (such as NDVI) measured at a single pixel location over time. For a pixel observed at $t$ timestamps, the UTS $X$ is represented as:
+            A univariate time-series represents a single variable (such as NDVI) measured at a single pixel location over time \citep{zamanzadeh2024deep}. For a pixel observed at $t$ timestamps, the UTS $X$ is represented as:
 
             \[
             X = (x_1, x_2, \ldots, x_t)
@@ -114,7 +116,7 @@ Campinas, SP, Brazil, 13083-896 \\
             where $x_i$ represents the feature value at timestamp $i \in T$ and $T = \{1, 2, \ldots, t\}$.
 
         \subsubsection{Multivariate Time-Series (MTS)}
-            A multivariate time-series represents multiple variables that exhibit both temporal dependencies (correlations across time) and spatial dependencies (correlations between variables). For a pixel with $d$ features observed over $t$ timestamps:
+            A multivariate time-series represents multiple variables that exhibit both temporal dependencies (correlations across time) and spatial dependencies (correlations between variables) \citep{zamanzadeh2024deep}. For a pixel with $d$ features observed over $t$ timestamps:
 
             \begin{equation}
             X = (X_1, X_2, \ldots, X_t)
@@ -146,101 +148,6 @@ Campinas, SP, Brazil, 13083-896 \\
 
         \subsubsection{Cyclicity}
             Cycles are repetitive patterns similar to seasonality but occurring over longer, less predictable time periods not aligned with calendar intervals. In agricultural contexts, cycles may relate to multi-year climate patterns or economic factors.
-
-    \subsection{Time-Series Smoothing Techniques}
-
-        Smoothing techniques are essential preprocessing steps that remove noise from time-series data while preserving important patterns. This is particularly critical when comparing pixel time-series or applying distance-based algorithms.
-
-        Consider two pixels with similar underlying patterns but different noise characteristics. Without smoothing, distance-based clustering algorithms may incorrectly classify these pixels as dissimilar due to noise rather than genuine differences in behavior. Smoothing addresses this issue by enhancing signal-to-noise ratio.
-
-        The choice of smoothing method depends on the structural characteristics of the time-series, as summarized in Table \ref{tab:t1}.
-
-        \begin{table}[h]
-        \centering
-        \caption{Smoothing algorithm applicability for different time-series structures}
-        \label{tab:t1}
-        \renewcommand{\arraystretch}{1.3}
-            \begin{tabular}{|l|c|c|c|c|}
-            \hline
-            \textbf{Algorithm} & \textbf{Level} & \textbf{Trend} & \textbf{Seasonality} & \textbf{Parameters} \\
-            \hline
-            Single HWES  & Yes & No  & No  & $\alpha$ \\
-            Double HWES  & Yes & Yes & No  & $\alpha, \beta$ \\
-            Triple HWES  & Yes & Yes & Yes & $\alpha, \beta, \gamma$ \\
-            \hline
-            \end{tabular}
-        \end{table}
-
-        Table \ref{tab:t2} defines the variables used in smoothing formulations.
-
-        \begin{table}[h]
-        \centering
-        \caption{Variables utilized in smoothing models}
-        \label{tab:t2}
-        \renewcommand{\arraystretch}{1.4}
-            \begin{tabular}{|c|l|}
-            \hline
-            \textbf{Symbol} & \textbf{Description} \\
-            \hline
-            $X$ & Observation \\
-            $S$ & Smoothed observation \\
-            $B$ & Trend factor \\
-            $C$ & Seasonal index \\
-            $F$ & Forecast at $m$ periods ahead \\
-            $\alpha$ & Data smoothing factor, $\alpha \in (0,1)$ \\
-            $\beta$ & Trend smoothing factor, $\beta \in (0,1)$ \\
-            $\gamma$ & Seasonal change smoothing factor, $\gamma \in (0,1)$ \\
-            $\phi$ & Damped smoothing factor, $\phi \in (0,1)$ \\
-            $t$ & Time period index \\
-            \hline
-            \end{tabular}
-        \end{table}
-
-        \subsubsection{Moving Average and Weighted Average}
-            These methods compute the future value as the average (or weighted average) of $k$ previous values. While useful for trend observation and feature engineering, these approaches are unsuitable for satellite time-series with trend and seasonality components.
-
-        \subsubsection{Single Exponential Smoothing (SES)}
-            SES models the level component only and is appropriate for stationary series without trend or seasonality. It weights recent observations more heavily based on the assumption that the future is more closely related to the recent past.
-
-            \[
-                S_0 = X_0
-            \]
-
-            \[
-                S_t = \alpha X_t + (1 - \alpha) S_{t-1}, \quad t > 0, \; 0 < \alpha < 1
-            \]
-
-            \textbf{Application:} Limited applicability to agricultural time-series, which typically exhibit both trend and seasonality.
-
-        \subsubsection{Double Exponential Smoothing (DES)}
-            DES extends SES by incorporating trend, making it suitable for series with trend but without seasonality.
-
-            \[
-                \begin{aligned}
-                S_0 &= X_0 \\
-                B_0 &= X_1 - X_0 \\
-                S_t &= \alpha X_t + (1 - \alpha)(S_{t-1} + B_{t-1}) \\
-                B_t &= \beta (S_t - S_{t-1}) + (1 - \beta) B_{t-1}, \quad \alpha, \beta \in (0,1)
-                \end{aligned}
-            \]
-
-            \textbf{Application:} Applicable to agricultural time-series when seasonality is not a dominant factor.
-
-        \subsubsection{Triple Exponential Smoothing (TES) / Holt-Winters}
-            TES represents the most comprehensive smoothing approach, modeling level, trend, and seasonality simultaneously. This method is most appropriate for agricultural satellite time-series, which exhibit all three components.
-
-            \[
-                \begin{aligned}
-                S_0, F_0 &= X_0 \\
-                B_0 &= \frac{\sum_{i=0}^{L-1} \left( X_{L+i} - X_i \right)}{L^2} \\
-                S_t &= \alpha \left( X_t - C_{t \bmod L} \right) + (1 - \alpha)\left( S_{t-1} + \phi B_{t-1} \right) \\
-                B_t &= \beta \left( S_t - S_{t-1} \right) + (1 - \beta)\phi B_{t-1} \\
-                C_{t \bmod L} &= \gamma \left( X_t - S_t \right) + (1 - \gamma) C_{t \bmod L} \\
-                F_{t+m} &= S_t + B_t \sum_{i=1}^{m} \phi^{i} + C_{t \bmod L}, \quad \alpha, \beta, \gamma \in (0,1)
-                \end{aligned}
-            \]
-
-            \textbf{Application:} Recommended for Sentinel-2 vegetation index time-series, which exhibit clear seasonal patterns related to crop phenology.
 
     \subsection{Anomalies in Time-Series}
         According to Hawkings et al (1980) an anomaly is a data point or sequence that deviates from the general data distribution. In a time-series dataset, only a small fraction contains anomalies, where the majority of the data points follow expected patterns. In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity (Fu et al., 2025). The most meaningful deviations are usually those that are significantly different from the norm.
@@ -488,8 +395,109 @@ Campinas, SP, Brazil, 13083-896 \\
 \section{Conclusion}
 
 \clearpage
-
 \bibliography{kenzo}
 \bibliographystyle{kenzo}
+\clearpage
+
+\appendix
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+\section{Appendix}
+\subsection{Time-Series Smoothing Techniques}
+
+        Smoothing techniques are essential preprocessing steps that remove noise from time-series data while preserving important patterns. This is particularly critical when comparing pixel time-series or applying distance-based algorithms.
+
+        Consider two pixels with similar underlying patterns but different noise characteristics. Without smoothing, distance-based clustering algorithms may incorrectly classify these pixels as dissimilar due to noise rather than genuine differences in behavior. Smoothing addresses this issue by enhancing signal-to-noise ratio.
+
+        The choice of smoothing method depends on the structural characteristics of the time-series, as summarized in Table \ref{tab:t1}.
+
+        \begin{table}[h]
+        \centering
+        \caption{Smoothing algorithm applicability for different time-series structures}
+        \label{tab:t1}
+        \renewcommand{\arraystretch}{1.3}
+            \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            \textbf{Algorithm} & \textbf{Level} & \textbf{Trend} & \textbf{Seasonality} & \textbf{Parameters} \\
+            \hline
+            Single HWES  & Yes & No  & No  & $\alpha$ \\
+            Double HWES  & Yes & Yes & No  & $\alpha, \beta$ \\
+            Triple HWES  & Yes & Yes & Yes & $\alpha, \beta, \gamma$ \\
+            \hline
+            \end{tabular}
+        \end{table}
+
+        Table \ref{tab:t2} defines the variables used in smoothing formulations.
+
+        \begin{table}[h]
+        \centering
+        \caption{Variables utilized in smoothing models}
+        \label{tab:t2}
+        \renewcommand{\arraystretch}{1.4}
+            \begin{tabular}{|c|l|}
+            \hline
+            \textbf{Symbol} & \textbf{Description} \\
+            \hline
+            $X$ & Observation \\
+            $S$ & Smoothed observation \\
+            $B$ & Trend factor \\
+            $C$ & Seasonal index \\
+            $F$ & Forecast at $m$ periods ahead \\
+            $\alpha$ & Data smoothing factor, $\alpha \in (0,1)$ \\
+            $\beta$ & Trend smoothing factor, $\beta \in (0,1)$ \\
+            $\gamma$ & Seasonal change smoothing factor, $\gamma \in (0,1)$ \\
+            $\phi$ & Damped smoothing factor, $\phi \in (0,1)$ \\
+            $t$ & Time period index \\
+            \hline
+            \end{tabular}
+        \end{table}
+
+        \subsubsection{Moving Average and Weighted Average}
+            These methods compute the future value as the average (or weighted average) of $k$ previous values. While useful for trend observation and feature engineering, these approaches are unsuitable for satellite time-series with trend and seasonality components.
+
+        \subsubsection{Single Exponential Smoothing (SES)}
+            SES models the level component only and is appropriate for stationary series without trend or seasonality. It weights recent observations more heavily based on the assumption that the future is more closely related to the recent past.
+
+            \[
+                S_0 = X_0
+            \]
+
+            \[
+                S_t = \alpha X_t + (1 - \alpha) S_{t-1}, \quad t > 0, \; 0 < \alpha < 1
+            \]
+
+            \textbf{Application:} Limited applicability to agricultural time-series, which typically exhibit both trend and seasonality.
+
+        \subsubsection{Double Exponential Smoothing (DES)}
+            DES extends SES by incorporating trend, making it suitable for series with trend but without seasonality.
+
+            \[
+                \begin{aligned}
+                S_0 &= X_0 \\
+                B_0 &= X_1 - X_0 \\
+                S_t &= \alpha X_t + (1 - \alpha)(S_{t-1} + B_{t-1}) \\
+                B_t &= \beta (S_t - S_{t-1}) + (1 - \beta) B_{t-1}, \quad \alpha, \beta \in (0,1)
+                \end{aligned}
+            \]
+
+            \textbf{Application:} Applicable to agricultural time-series when seasonality is not a dominant factor.
+
+        \subsubsection{Triple Exponential Smoothing (TES) / Holt-Winters}
+            TES represents the most comprehensive smoothing approach, modeling level, trend, and seasonality simultaneously. This method is most appropriate for agricultural satellite time-series, which exhibit all three components.
+
+            \[
+                \begin{aligned}
+                S_0, F_0 &= X_0 \\
+                B_0 &= \frac{\sum_{i=0}^{L-1} \left( X_{L+i} - X_i \right)}{L^2} \\
+                S_t &= \alpha \left( X_t - C_{t \bmod L} \right) + (1 - \alpha)\left( S_{t-1} + \phi B_{t-1} \right) \\
+                B_t &= \beta \left( S_t - S_{t-1} \right) + (1 - \beta)\phi B_{t-1} \\
+                C_{t \bmod L} &= \gamma \left( X_t - S_t \right) + (1 - \gamma) C_{t \bmod L} \\
+                F_{t+m} &= S_t + B_t \sum_{i=1}^{m} \phi^{i} + C_{t \bmod L}, \quad \alpha, \beta, \gamma \in (0,1)
+                \end{aligned}
+            \]
+
+            \textbf{Application:} Recommended for Sentinel-2 vegetation index time-series, which exhibit clear seasonal patterns related to crop phenology.
 
 \end{document}

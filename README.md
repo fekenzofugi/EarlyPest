@@ -2,7 +2,7 @@
 
 This repository contains code implementations and methods for detecting anomalies in time-series Sentinel-2 satellite imagery. The goal of this project was to create a model that given a time-series of images generate early alerts of possible pest attacks for the farmer in three degress: Low, Medium, Severe.
 
-![Overview](report/figures/overview.png)
+![Overview](src/report/figures/overview.png)
 
 The repository is structured based on different regions of the globe. In the `ghana.ipynb` we have the code to track down pest-attacks in Ejura, Ghana. In the `india.ipynb`, we have the code to track down pest-attacks in the Southern region of India. 
 
