@@ -1,0 +1,101 @@
+%% kenzo.sty – Custom ICLR-style LaTeX file
+%%
+%% This is a custom version of the original iclr.sty
+%% Adapted by Fernando Kenzo.
+%%
+%% This file can be used, modified, and redistributed under
+%% the terms of the LaTeX Project Public License (LPPL), either
+%% version 1 of the License or any later version.
+%%
+%% Note: Since this is a modified file, do not distribute it under the original ICLR name.
+
+\usepackage{eso-pic}
+\RequirePackage{fancyhdr}
+\RequirePackage{natbib}
+
+% modification to natbib citations
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+
+\newif\ifkenzofinal
+\kenzofinalfalse
+\def\kenzofinalcopy{\kenzofinaltrue}
+
+\font\iclrtenhv  = phvb at 8pt
+
+% Page dimensions
+\setlength{\paperheight}{11in}
+\setlength{\paperwidth}{8.5in}
+
+\oddsidemargin .5in
+\evensidemargin .5in
+\marginparwidth 0.07 true in
+\topmargin -0.625in
+\addtolength{\headsep}{0.25in}
+\textheight 9.0 true in
+\textwidth 5.5 true in
+\widowpenalty=10000
+\clubpenalty=10000
+
+\flushbottom \sloppy
+
+\def\addcontentsline#1#2#3{}
+
+\def\maketitle{\par
+\begingroup
+   \def\thefootnote{\fnsymbol{footnote}}
+   \def\@makefnmark{\hbox to 0pt{$^{\@thefnmark}$\hss}}
+   \long\def\@makefntext##1{\parindent 1em\noindent
+                            \hbox to1.8em{\hss $\m@th ^{\@thefnmark}$}##1}
+   \@maketitle \@thanks
+\endgroup
+\setcounter{footnote}{0}
+\let\maketitle\relax \let\@maketitle\relax
+\gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
+
+\pagestyle{fancy}
+\fancyhead{}
+
+\def\@maketitle{\vbox{\hsize\textwidth
+{\LARGE\sc \@title\par}
+\ifkenzofinal
+  \def\AND{\end{tabular}\hfil\linebreak[4]\hfil
+            \begin{tabular}[t]{l}\bf\rule{\z@}{24pt}\ignorespaces}%
+    \begin{tabular}[t]{l}\bf\rule{\z@}{24pt}\@author\end{tabular}%
+\else
+  \def\AND{\end{tabular}\hfil\linebreak[4]\hfil
+            \begin{tabular}[t]{l}\bf\rule{\z@}{24pt}\ignorespaces}%
+    \begin{tabular}[t]{l}\bf\rule{\z@}{24pt}Anonymous authors\\Paper under double-blind review\end{tabular}%
+\fi
+\vskip 0.3in minus 0.1in}}
+
+\renewenvironment{abstract}{\vskip.075in\centerline{\large\sc
+Abstract}\vspace{0.5ex}\begin{quote}}{\par\end{quote}\vskip 1ex}
+
+\def\section{\@startsection {section}{1}{\z@}{-2.0ex plus
+    -0.5ex minus -.2ex}{1.5ex plus 0.3ex
+minus0.2ex}{\large\sc\raggedright}}
+
+\def\subsection{\@startsection{subsection}{2}{\z@}{-1.8ex plus
+-0.5ex minus -.2ex}{0.8ex plus .2ex}{\normalsize\sc\raggedright}}
+
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-1.5ex
+plus -0.5ex minus -.2ex}{0.5ex plus
+.2ex}{\normalsize\sc\raggedright}}
+
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus
+0.5ex minus .2ex}{-1em}{\normalsize\bf}}
+
+\def\subparagraph{\@startsection{subparagraph}{5}{\z@}{1.5ex plus
+0.5ex minus .2ex}{-1em}{\normalsize\sc}}
+
+\parindent 0pt
+\parskip .5pc
+
+\makeatletter
+\def\toptitlebar{}
+\def\bottomtitlebar{}
+\renewcommand{\headrulewidth}{0pt}
+\makeatother

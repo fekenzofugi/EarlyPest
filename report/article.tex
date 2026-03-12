@@ -1,0 +1,490 @@
+
+\documentclass{article} % For LaTeX2e
+\usepackage{kenzo,times}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{booktabs}
+\usepackage{chngcntr}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+
+\title{Title}
+
+\author{Fernando K.I. Fugihara \\
+Universidade Estadual de Campinas – UNICAMP\\
+Campinas, SP, Brazil, 13083-896 \\
+\texttt{f205067@dac.unicamp.br} \\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\kenzofinalcopy % Uncomment for final version
+\begin{document}
+
+\begin{titlepage}
+    \centering
+
+    % Logos
+    \begin{figure}[t]
+        \centering
+        \begin{minipage}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{figures/logo_nipe.png}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{figures/unicamp.png}
+        \end{minipage}
+    \end{figure}
+
+    \vspace{1cm}
+
+    {\Large \textbf{Research Internship Abroad (BEPE/FAPESP)}}\\[1cm]
+
+    {\LARGE \textbf{Remote Sensing Anomaly Detection in Time-Series Imagery}}\\
+    {\LARGE \textbf{and Application Development in the Agricultural Context}}\\[1.5cm]
+
+    {\large Process: 2025/22483-0}\\[0.5cm]
+
+    {\large Final Report: December 01, 2025 -- March 01, 2026 (3 months)}\\[3cm]
+
+    \begin{flushright}
+        {\large \textbf{Brazil Advisor:} Dr. Rubens Augusto Camargo Lamparelli}\\
+        {\large \textbf{UK Supervisor:} Dr. Jefersson Alex dos Santos}\\
+        {\large \textbf{UK Co-Supervisor:} Prof. Po Yang}\\
+        {\large \textbf{Fellow:} Fernando Kenzo Imami Fugihara}
+    \end{flushright}
+
+    \vfill
+
+    {\large Campinas, SP}\\
+    {\large 2025}
+
+\end{titlepage}
+
+
+\begin{abstract}
+The use of plastic in agriculture has increased significantly in recent years, bringing both benefits and environmental challenges. While agricultural plastics improve crop yields and resource efficiency, they also lead to the accumulation of plastic waste in rural areas. Remote Sensing (RS) data, combined with advanced machine learning and computer vision techniques, provide an effective means to monitor plasticulture dynamics. Therefore, this research internship aims to explore RS anomaly detection (RSAD) techniques in time-series imagery and apply them to agricultural monitoring, particularly in detecting subtle cases that involve spectral changes such as material deterioration and pest-related disturbances. Therefore, I’ll join researchers at the University of Sheffield to learn RSAD techniques in the agriculture context and then explore whether they can be applied in plasticulture. In parallel, I’ll collaborate with researchers at the University of Sheffield and contribute to the PEZEGO pest-management app. The internship will provide hands-on experience in scalable application design, app optimization, and model integration, which can enhance our ongoing application, GeoHuman. The University of Sheffield was chosen due to its internationally recognized expertise in application development, machine learning, computer vision, and remote sensing. This experience will strengthen our project in Brazil by improving the accuracy and scalability of agricultural monitoring systems. Upon my return, I will disseminate the knowledge gained through workshops and collaborative activities with my research group at UNICAMP to fos	ter innovation and capacity building in remote sensing applications.
+
+\end{abstract}
+
+    
+\section{Introduction}
+
+    In the context of learning anomaly detection techniques applied to remote sensing, the research objectives also align with the Brazil–UK–Africa collaboration “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming”, funded by UK Research and Innovation (UKRI).
+
+
+    This research internship focuses on detecting anomalies in agricultural systems through time-series analysis of Sentinel-2 satellite imagery. The project investigates whether plastic mulch deterioration in melon crops can be identified using multi-temporal spectral signals. It also evaluates the feasibility of detecting pest infestations—particularly Fall Armyworm (Spodoptera frugiperda) in maize—by analysing vegetation dynamics derived from Sentinel-2 data. 
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=1\textwidth]{figures/graphical_abstract.png}
+        \caption{Graphical Abstract of BEPE.}
+        \label{fig:graphical_abstract}
+    \end{figure}
+    \FloatBarrier
+\section{Time-Series Analysis}
+    \subsection{Time-Series Definitions}
+        Time series is a sequence of points indexed by time stamps \citep{zamanzadeh2024deep}. This kind of data is present in various fields with different applications such as finantial analysis, environmental changes, and crop monitoring. 
+
+        \subsubsection{Univariate Time-Series (UTS)}
+            A univariate time-series represents a single variable (such as NDVI) measured at a single pixel location over time \citep{zamanzadeh2024deep}. For a pixel observed at $t$ timestamps, the UTS $X$ is represented as:
+
+            \[
+            X = (x_1, x_2, \ldots, x_t)
+            \]
+
+            where $x_i$ represents the feature value at timestamp $i \in T$ and $T = \{1, 2, \ldots, t\}$.
+
+        \subsubsection{Multivariate Time-Series (MTS)}
+            A multivariate time-series represents multiple variables that exhibit both temporal dependencies (correlations across time) and spatial dependencies (correlations between variables) \citep{zamanzadeh2024deep}. For a pixel with $d$ features observed over $t$ timestamps:
+
+            \begin{equation}
+            X = (X_1, X_2, \ldots, X_t)
+            = \bigl(
+                (x_1^1, x_1^2, \ldots, x_1^d),
+                (x_2^1, x_2^2, \ldots, x_2^d),
+                \ldots,
+                (x_t^1, x_t^2, \ldots, x_t^d)
+                \bigr)
+            \end{equation}
+
+            where $X_i = (x_i^1, x_i^2, \ldots, x_i^d)$ represents the feature vector at time $i$, and $x_i^j$ is the observation at time $i$ for the $j$-th dimension.
+
+    \subsection{Time Series Components}
+        An important technique when using time series is that we can divide the data into four components: the Trend, the Seasonality, the Cyclicity and the Noise. Depending on the problem and context, these components can be analysed separately or combined to better understand the underlying patterns. In agriculture, seasonality and cyclicity are often the most informative, as crop growth and environmental conditions follow recurring patterns. In contrast, in financial markets, the trend component typically provides more insight than the others, especially for long-term analysis. The following sections provide the definitions of each component.
+        
+        Figure \ref{fig:ex} presents a random time-series.
+        
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=0.7\textwidth]{figures/example.png}
+            \caption{Time-series example.}
+            \label{fig:ex}
+        \end{figure}
+        \FloatBarrier
+
+        \subsubsection{Trend}
+            In a time series, the trend is the pattern of the overall dataset that increases or decreases. Presence of trend typically violates stationarity, as the mean changes over time.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.7\textwidth]{figures/trend.png}
+                \caption{Time series trend example.}
+                \label{fig:trend}
+            \end{figure}
+        \FloatBarrier
+
+        \subsubsection{Seasonality}
+            Seasonality refers to regular, predictable patterns that repeat at fixed intervals (e.g., daily, weekly, seasonal cycles in crop development).
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.7\textwidth]{figures/seasonality.png}
+                \caption{Time series seasonality example.}
+                \label{fig:seasonality}
+            \end{figure}
+            \FloatBarrier
+
+        \subsubsection{Cyclicity}
+            Cycles are repetitive patterns similar to seasonality but occurring over longer, less predictable time periods not aligned with calendar intervals.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.7\textwidth]{figures/cyclicity.png}
+                \caption{Time series cyclicity example.}
+                \label{fig:cyclicity}
+            \end{figure}
+            \FloatBarrier
+
+        \subsubsection{Noise}
+            The noise is particularly important to verify wheather the time series is stationary of not. A time-series is stationary when its statistical properties (mean, variance, covariance) remain constant over time. If the noise is random, then the series is stationary, if the random have some kind of pattern, this means that some information of the three other components remained in the noise. Although, stationary is an important assumption for many time-series analysis techniques, in real world scenarios, is common to find non-stationary data with different data distributions within the same dataset.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.7\textwidth]{figures/noise.png}
+                \caption{Time series noise example.}
+                \label{fig:noise}
+            \end{figure}
+            \FloatBarrier
+
+            Another frequent concept in time-series is the level which represents the average value of the time-series and can be conceptualized as the mean around which observations fluctuate. This property is common in stationary series.
+
+    \section{Anomalies in Time-Series}
+        According to Hawkings et al (1980) an anomaly is a data point or sequence that deviates from the general data distribution. In a time-series dataset, only a small fraction contains anomalies, where the majority of the data points follow expected patterns. There are different types of anomalies in time-series including global, trend, cycle and seasonal.
+
+        \subsection{Global and Local Anomalies}
+        \subsection{Trend Anomalies}
+        \subsection{Seasonal Anomalies}
+        \subsection{Cycle Anomalies}
+
+    \section{Methodology}
+        Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series  (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=1\textwidth]{figures/overview.png}
+            \caption{Conceptual framework of FAW infestation detection using Sentinel-2 time-series analysis.}
+            \label{fig:abstract}
+        \end{figure}
+        \FloatBarrier
+
+    \subsection{Data and Study Regions}
+        This research utilizes Harmonized Sentinel-2 (S2) Level-2A surface reflectance imagery, accessed through Google Earth Engine (GEE). The Copernicus Sentinel-2 mission consists of two polar-orbiting satellites (2A and 2B) operating in sun-synchronous orbit at 786 km altitude, phased 180° apart.
+
+        \subsubsection{Mossoró, Rio Grande do Norte, Brazil}
+            The study area is located in Mossoró, Rio Grande do Norte, Brazil, where previous fieldassessments and local expertise provide a solid foundation for this research. The regionis particularly notable for its extensive use of plasticulture in melon cultivation, makingit a relevant and representative site for analyzing agricultural land-cover dynamics.Additionally, pest-management practices, such as the use of pest nets, are commonly employed to protect melon crops. Field observations conducted by the research teamalso confirmed that plastic mulch is often reused across multiple cultivation cycles,resulting in areas with visibly deteriorated plastic materials.Figure \ref{fig:study_area_mossoro} illustrates the landscape characteristics of this region.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.8\textwidth]{figures/study_area_mossoro.png}
+                \caption{Mossoró study region, Rio Grande do Norte, Brazil, showing plasticulture fields.}
+                \label{fig:study_area_mossoro}
+            \end{figure}
+            \FloatBarrier
+
+        % \subsubsection{Ejura, Ghana, West Africa}
+
+        %     Figure \ref{fig:study_area_ghana} presents the diverse agricultural landscape of Ejura.
+
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=1\textwidth]{figures/study_area_ghana.png}
+        %         \caption{Ejura study region, Ghana, West Africa, showing diverse crop systems.}
+        %         \label{fig:study_area_ghana}
+        %     \end{figure}
+        %     \FloatBarrier
+
+        \subsubsection{Kurnool and Gadwal Districts, Southern India}
+
+            Prabhakar et al. (2022) conducted field surveys in Kurnool and Gadwal districts ofSouthern India to map FAW infestations in maize crops (sorghum). In his field surveys,he mapped the regions as healthy, low, medium, and severe infestation levels. Based on that,we selected one field classified as severe infestation for our proof of concept. The Prabhakaret al. (2022) field survey confirmed that the FAW infestation occurred between October 26, 2018 andNovember 15, 2018. Figure \ref{fig:study_area_india} shows the agriculturallandscape characteristics of these districts.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=1\textwidth]{figures/study_area_india.png}
+                \caption{Kurnool and Gadwal districts, Southern India, showing maize cultivation areas.}
+                \label{fig:study_area_india}
+            \end{figure}
+            \FloatBarrier
+
+    \subsection{Time-Series Representation}
+        In this study, we used a Multivariate Time-Series (MTS) representation, where each field is represented by multiple spectral indices (NDVI, LAI) over time. This approach captures both temporal dynamics and inter-index relationships. Given a field observed over $t$ timestamps, each vector at time $i$, $X_i$, contains $2$ features (spectral indices):
+
+        \begin{equation}
+        X = (X_1, X_2, \ldots, X_t)
+        = \bigl(
+            (x_1^1, x_1^2),
+            (x_2^1, x_2^2),
+            \ldots,
+            (x_t^1, x_t^2)
+            \bigr)
+        \end{equation}
+
+        Where $X_i = (x_i^1, x_i^2)$ represents the feature vector at time $i$, with $x_i^1$ as NDVI and $x_i^2$ as LAI.
+
+        \subsection{Preprocessing Sentinel-2 Imagery}
+            In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity (Fu et al., 2025). The most meaningful deviations are usually those that are significantly different from the norm.
+
+            Preprocessing is a crucial step in machine learning and data pipelines (Tawakuli et al., 2025). It employs various techniques to ensure that the data fed into a model is clean, consistent, and informative, which directly influences its performance and reliability (Zheng et al., 2021). This is especially important in RSAD modeling. In RS imagery, data quality can be compromised by factors such as Earth's geometric effects resulting from its curvature and rotation, atmospheric conditions like cloud cover, sensor noise, seasonal variations, and landscape complexity (Fu et al., 2025).
+
+        \subsubsection{Spectral Indices}
+
+            Spectral vegetation indices (SVI) derived from remote sensing data provide quantitative measures of crop health and stress. These indices are particularly effective for detecting impacts of diseases and pest invasions. This research employs multiple indices to capture different aspects of plant health:
+
+            Table \ref{tab:plastic_indices} summarizes the plastic indices used to detect plasticulture systems
+
+                \begin{table}[!h]
+                \centering
+                \caption{Spectral plastic indices and corresponding equations using Sentinel-2 bands.}
+                \label{tab:plastic_indices}
+                \renewcommand{\arraystretch}{1.4}
+                \small
+                    \begin{tabular}{p{3cm} p{3cm} p{3cm}}
+                    \textbf{Index} & \textbf{Equation} & \textbf{Reference} \\
+                    \hline
+                    Plastic Index & 
+                    $\frac{SWIR - NIR}{SWIR + NIR}$ & 
+                    Mudereri et al., 2022
+                    \end{tabular}
+                \end{table}
+
+                Studies from Dzurune et al. (2025), Bilintoh et al. (2019), Prabhakar et al. (2022), have demostrated the effectiveness of Normalized Difference Vegetation Index (NDVI) Enhanced Vegetation Index (EVI) and Leaf Area Index (LAI), respectively, in detecting pest infestations. Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
+
+                \begin{table}[ht]
+                \centering
+                \caption{Spectral vegetation indices and corresponding equations using Sentinel-2 bands.}
+                \label{tab:veg_indices}
+                \renewcommand{\arraystretch}{1.4}
+                \small
+                    \begin{tabular}{p{3cm} p{3cm} p{3cm}}
+                    \textbf{Index} & \textbf{Equation} & \textbf{Reference} \\
+                    \hline
+                    NDVI & 
+                    $\frac{NIR - Red}{NIR + Red}$ & 
+                    Rouse et al., 1974 \\
+
+                    EVI & 
+                    $2.5 \frac{NIR - R}{NIR + 6R - 7.5B + 1}$ & 
+                    Huete et al., 1997 \\
+
+                    LAI &
+                    $3.618 \times \text{EVI} - 0.118$ & 
+                    Boegh et al., 2002 \\
+                    \end{tabular}
+                \end{table}
+                
+        \subsubsection{Time Series Smoothing}
+        Time series smoothing is a technique used to reduce noise and improve data quality, making underlying patterns easier to analyse. In this study, we applied Triple Exponential Smoothing (TES) / Holt–Winters, which effectively models the level, trend, and seasonality components commonly present in agricultural satellite time series. \ref{appendix1} presents different smoothing techniques and its mathematical formulations.
+
+    \subsection{Anomaly Detection model}
+        \subsubsection{Plastic Deteriotation}
+
+        \subsubsection{Pest Attacks}
+
+
+    \subsection{Evaluation Metrics}
+
+    \section{Results and Discussion}
+
+        \subsection{Plasticulture change detection in Mossoró with Sentinel-2}
+            
+        \subsection{FAW infestation detection in Southern India with Sentinel-2}
+            To validate wheather S2 time-series can capture FAW infestation, we followed the methodology proposed by Prabhakar et al. (2022) which analyzed S2 time-series detect FAW infestation in maize crops in Southern India. Prabhakar et al. (2022) utilized ground truth data from field surveys to classify infestation severity levels (healthy, mild, moderate, severe) and correlated these with spectral signatures and vegetation index time-series derived from S2 imagery. In its field surveys, Prabhakar et al.(2022) mapped FAW infestation dated from October 26, 2018 to November 15, 2018, these dates and a severe field were selected for our proof of concept.
+
+            \subsubsection{Spectral Signatures of Pest Infestation}
+                Based on the severity classification framework proposed by Prabhakar et al. (2022),FAW damage is categorized into four levels: healthy (Grade-1), low (Grade-2), medium (Grade-3), and severe (Grade-4) infestation. In our study, we used the severe cases of the Prabhakar et al. (2022) field survey data available only at two key moments:a pre-infestation survey, representing healthy crop conditions, and a post-infestation survey,corresponding to severe FAW damage.These two surveys were used as temporal anchors to characterize the spectral responseof maize crops before and after the pest outbreak. The resulting spectral signatures associated with each severity level are presented in Figure\ref{fig:india_spectral_severity_classification}.
+                
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=1\textwidth]{figures/india_spectral_severity_classification.png}
+                    \caption{Spectral signatures of maize crops under different severity levels of Fall Armyworm infestation in Southern India.}
+                    \label{fig:india_spectral_severity_classification}
+                \end{figure}
+                \FloatBarrier
+
+                Based on the mean spectral response of the field ilustrated in Figure \ref{fig:india_spectral_severity_classification},we can interpret the its results based on each spectral band characteristics. Near-Infrared (B8):carries information about leaf structure. Damage from pest feeding reduces reflectance in thisband. Blue (B2) and Red (B4) carry chlorophyll information. Chlorophyll absorbs these wavelengths;reduction in absorption indicates decreased photosynthetic activity, often caused by pestfeeding on leaves. Shortwave Infrared (B10-B12) are sensitive to water content.Pest-damaged plants often exhibit water stress, detectable in these bands.
+ 
+                Harvest events cause abrupt transitions from high NDVI (green, healthy) to low NDVI  (senescence, yellow/brown), which must be distinguished from pest-related declines. Pest-related NDVI declines are more gradual and associated with specific temporal patterns linked to pest life cycles and feeding behavior.
+
+            \subsubsection{Time-Series Analysis}
+
+                Figure \ref{fig:2019indiaseries} present the NDVI time-series of 2019 of a e
+
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{figures/2019_india_timeseries.png}
+                    \caption{NDVI time series of 2019 in Southern India.}
+                    \label{fig:2019indiaseries}
+                \end{figure}
+                \FloatBarrier
+
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{figures/2018_india_timeseries.png}
+                    \caption{NDVI time series of 2018 in Southern India.}
+                    \label{fig:2018indiaseries}
+                \end{figure}
+                \FloatBarrier
+
+                Figure \ref{fig:india_lai_time_series_maps} show the LAI time-series maps of the FAW-infested field in Southern India. We observe a clear temporal decline in LAI values across the field,corresponding to the period of FAW infestation. The spatial patterns in these maps highlight the extent and severity of the damage caused by the pest, with lower index values indicatingareas of more severe infestation and biomass loss.
+
+                \begin{figure}[!ht]
+                    \centering
+                    \includegraphics[width=1\textwidth]{figures/india_lai_time_series_maps.png}
+                    \caption{LAI time series of FAW-infested in Southern India.}
+                    \label{fig:india_lai_time_series_maps}
+                \end{figure}
+                \FloatBarrier
+                
+
+        \subsection{Anomaly Detection \& Early Alerts}
+
+
+\section{Conclusion}
+
+\section{Internship Experience}
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/presenting.jpeg}
+        \caption{Presenting my project results in a weekly seminar for the Computer Vision Group at the University of Sheffield.}
+        \label{fig:}
+    \end{figure}
+    \FloatBarrier
+
+\clearpage
+\bibliography{kenzo}
+\bibliographystyle{kenzo}
+\clearpage
+
+\appendix
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+\section{Appendix}
+\subsection{Time-Series Smoothing Techniques}
+\label{appendix1}
+
+        Smoothing techniques are essential preprocessing steps that remove noise from time-series data while preserving important patterns. This is particularly critical when comparing pixel time-series or applying distance-based algorithms.
+
+        Consider two pixels with similar underlying patterns but different noise characteristics. Without smoothing, distance-based clustering algorithms may incorrectly classify these pixels as dissimilar due to noise rather than genuine differences in behavior. Smoothing addresses this issue by enhancing signal-to-noise ratio.
+
+        The choice of smoothing method depends on the structural characteristics of the time-series, as summarized in Table \ref{tab:t1}.
+
+        \begin{table}[h]
+        \centering
+        \caption{Smoothing algorithm applicability for different time-series structures}
+        \label{tab:t1}
+        \renewcommand{\arraystretch}{1.3}
+            \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            \textbf{Algorithm} & \textbf{Level} & \textbf{Trend} & \textbf{Seasonality} & \textbf{Parameters} \\
+            \hline
+            Single HWES  & Yes & No  & No  & $\alpha$ \\
+            Double HWES  & Yes & Yes & No  & $\alpha, \beta$ \\
+            Triple HWES  & Yes & Yes & Yes & $\alpha, \beta, \gamma$ \\
+            \hline
+            \end{tabular}
+        \end{table}
+
+        Table \ref{tab:t2} defines the variables used in smoothing formulations.
+
+        \begin{table}[h]
+        \centering
+        \caption{Variables utilized in smoothing models}
+        \label{tab:t2}
+        \renewcommand{\arraystretch}{1.4}
+            \begin{tabular}{|c|l|}
+            \hline
+            \textbf{Symbol} & \textbf{Description} \\
+            \hline
+            $X$ & Observation \\
+            $S$ & Smoothed observation \\
+            $B$ & Trend factor \\
+            $C$ & Seasonal index \\
+            $F$ & Forecast at $m$ periods ahead \\
+            $\alpha$ & Data smoothing factor, $\alpha \in (0,1)$ \\
+            $\beta$ & Trend smoothing factor, $\beta \in (0,1)$ \\
+            $\gamma$ & Seasonal change smoothing factor, $\gamma \in (0,1)$ \\
+            $\phi$ & Damped smoothing factor, $\phi \in (0,1)$ \\
+            $t$ & Time period index \\
+            \hline
+            \end{tabular}
+        \end{table}
+
+        \subsubsection{Moving Average and Weighted Average}
+            These methods compute the future value as the average (or weighted average) of $k$ previous values. While useful for trend observation and feature engineering, these approaches are unsuitable for satellite time-series with trend and seasonality components.
+
+        \subsubsection{Single Exponential Smoothing (SES)}
+            SES models the level component only and is appropriate for stationary series without trend or seasonality. It weights recent observations more heavily based on the assumption that the future is more closely related to the recent past.
+
+            \[
+                S_0 = X_0
+            \]
+
+            \[
+                S_t = \alpha X_t + (1 - \alpha) S_{t-1}, \quad t > 0, \; 0 < \alpha < 1
+            \]
+
+            \textbf{Application:} Limited applicability to agricultural time-series, which typically exhibit both trend and seasonality.
+
+        \subsubsection{Double Exponential Smoothing (DES)}
+            DES extends SES by incorporating trend, making it suitable for series with trend but without seasonality.
+
+            \[
+                \begin{aligned}
+                S_0 &= X_0 \\
+                B_0 &= X_1 - X_0 \\
+                S_t &= \alpha X_t + (1 - \alpha)(S_{t-1} + B_{t-1}) \\
+                B_t &= \beta (S_t - S_{t-1}) + (1 - \beta) B_{t-1}, \quad \alpha, \beta \in (0,1)
+                \end{aligned}
+            \]
+
+            \textbf{Application:} Applicable to agricultural time-series when seasonality is not a dominant factor.
+
+        \subsubsection{Triple Exponential Smoothing (TES) / Holt-Winters}
+            TES represents the most comprehensive smoothing approach, modeling level, trend, and seasonality simultaneously. This method is most appropriate for agricultural satellite time-series, which exhibit all three components.
+
+            \[
+                \begin{aligned}
+                S_0, F_0 &= X_0 \\
+                B_0 &= \frac{\sum_{i=0}^{L-1} \left( X_{L+i} - X_i \right)}{L^2} \\
+                S_t &= \alpha \left( X_t - C_{t \bmod L} \right) + (1 - \alpha)\left( S_{t-1} + \phi B_{t-1} \right) \\
+                B_t &= \beta \left( S_t - S_{t-1} \right) + (1 - \beta)\phi B_{t-1} \\
+                C_{t \bmod L} &= \gamma \left( X_t - S_t \right) + (1 - \gamma) C_{t \bmod L} \\
+                F_{t+m} &= S_t + B_t \sum_{i=1}^{m} \phi^{i} + C_{t \bmod L}, \quad \alpha, \beta, \gamma \in (0,1)
+                \end{aligned}
+            \]
+
+            \textbf{Application:} Recommended for Sentinel-2 vegetation index time-series, which exhibit clear seasonal patterns related to crop phenology.
+
+\end{document}
