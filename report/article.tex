@@ -80,11 +80,49 @@ The use of plastic in agriculture has increased significantly in recent years, b
     
 \section{Introduction}
 
+    The use of plastic in agriculture, commonly referred to as Plasticulture (Dubois et al., 1978; Levin et al., 2007), has increased steadily in recent years (Perilla & Mas, 2019). According to Sintim and Flury (2017), the global annual usage of plastic films in land-based farming is estimated at 7.4 million tons, mostly from greenhouses and mulching (Food and Agriculture Organization, 2021). As plastics become increasingly prevalent in rural areas, concerns about agricultural plastic waste (APW) are escalating (Figure 1). Plastic waste has gained worldwide attention, prompting discussions among numerous countries and international organizations about potential solutions. These conversations include various aspects, including the use of plastic in agriculture (European Commission, 2019; Food and Agriculture Organization, 2021; Hofmann et al., 2023; UNEP, 2018, 2022). Therefore, mapping plasticulture sites is crucial, and one effective method involves using Remote Sensing (RS) data combined with advanced computer vision (CV) algorithms trained to classify RS images. 
 
-    In the context of learning anomaly detection techniques applied to remote sensing, the research objectives also align with the Brazil–UK–Africa collaboration “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming”, funded by UK Research and Innovation (UKRI).
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/Fig1_nerc-fapesp.png}
+        \caption{Growth in publications about agri-plastic remote detection. (b) APW deposited on a farm in Brazil awaiting correct disposal. Sometimes producers face difficulties finding someone to collect the plastic. Search in Web of Science on October 11th of 2023 with the query TS= ((agricultural plastic OR agro-plastic OR agroplastic OR agri-plastic OR agriplastic OR plasticulture) AND (remote sensing OR classification OR mapping OR detection) AND (greenhouse OR mulch*)).}
+        \label{fig:scholar}
+    \end{figure}
+    \FloatBarrier
 
 
-    This research internship focuses on detecting anomalies in agricultural systems through time-series analysis of Sentinel-2 satellite imagery. The project investigates whether plastic mulch deterioration in melon crops can be identified using multi-temporal spectral signals. It also evaluates the feasibility of detecting pest infestations—particularly Fall Armyworm (Spodoptera frugiperda) in maize—by analysing vegetation dynamics derived from Sentinel-2 data. 
+    Monitoring plasticulture requires careful attention during critical crop stages, especially those involving pest control and the post-harvest period, when the plastic cover reappears in RS imagery. These transitions can cause spectral variations detectable in RS data (Dubucq et al., 2020; Holt et al., 2025). Examples of such variations include those caused by the temporary use of pest-protection nets (Figure 
+    \ref{pestnet}a) and the reappearance or gradual change of plastic (Figure \ref{pestnet}b). Over time, factors such as sunlight exposure, temperature changes, and mechanical stress may also alter the material properties of agricultural plastics, subtly impacting their spectral signatures (Dubucq et al., 2020). Additionally, the use or removal of pest-control nets can also alter the scene’s reflectance, introducing spectral variations detectable in RS data, verified through our field observations. In this context, Remote Sensing Anomaly Detection (RSAD) offers a valuable framework for identifying these subtle and unexpected spectral deviations from standard temporal patterns, thereby facilitating the continuous monitoring of plasticulture activities and related farming practices (Kwon et al., 2005).
+
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/1000062840.jpg}
+        \caption{Subtle dynamics of agricultural plastic use in Mossoró, RN, Brazil. a) The temporary use of a pest-control net to shield the crops. b) The reappearance and presence of the underlying plastic mulch after harvest. Photographs taken during a field visit by our research group.}
+        \label{pestnet}
+    \end{figure}
+    \FloatBarrier
+
+    RSAD has been widely studied (Recetin et al., 2021; Guo et al., 2016) and successfully applied to various domains, including environmental monitoring (Guo et al., 2016), urban mapping (Rejas et al., 2016), and disaster detection (Anand et al., 2022). At the University of Sheffield, I will collaborate with researchers experienced in anomaly detection (AD) modeling and its applications in the agricultural sector. We will explore the potential of applying RSAD techniques to monitor the plasticulture cycle using time series data, particularly to detect subtle deviations such as plastic deterioration and pest control practices.
+
+
+    AD models that rely on RS imagery present significant challenges for agricultural detection due to variable illumination, heterogeneous and complex landscapes, and seasonal or phenological variations (Fu et al., 2025). A crucial step for applying RSAD techniques to time-series data is the effective preprocessing of satellite imagery, which ensures that the model outputs are reliable and accurate. One of the problems is the cloud cover, which obscures or contaminates surface reflectance and is especially evident in long-term data (Gawlikowski et al., 2022;  King et al., 2013; Wen et al., 2001). In my ongoing research in Brazil, I have worked extensively on preprocessing techniques, including cloud masking, multimodal fusion, and geographic target analysis, to improve the detection of agricultural plastics. Building on this background, engaging with researchers at Sheffield will allow me to integrate preprocessing with advanced RSAD approaches. 
+
+
+    One of the main challenges the circular economy group faced was collecting sufficient data to train CV algorithms for effective plasticulture monitoring. Given this context and considering the limited funding and manpower for field data collection, our team developed a web-based application (GeoHuman) featuring an intuitive user interface to facilitate rapid user adoption (Bödi & Kaulich, 1992). Our app, currently in development, generates high-quality RS-labeled datasets by applying CV models and preprocessing techniques in a pipeline. This work is part of the FAPESP-Braskem project (2021/052251-8). However, the application still faces significant challenges, including the need to scale efficiently to support a large number of users, reduce model prediction time, and support only local deployment. These bottlenecks currently hinder the system's usability for broader agricultural applications.
+
+
+    Considering the current challenges of our research in Brazil, I intend to establish a collaboration with researchers at the University of Sheffield, who have extensive experience in developing software applications for agricultural monitoring and management. Working with them will allow me to learn advanced methodologies in scalable system design, mobile app development, and model optimization. By acquiring these techniques and incorporating them into the ongoing development of our application, I will overcome the existing limitations and significantly enhance its efficiency, scalability, and quality in Brazil.
+
+
+    This research internship abroad has one main goal: to increase knowledge through collaboration with researchers at the University of Sheffield, focusing on learning RSAD techniques and developing applications. We will explore whether RSAD in time series can be used in the agricultural context. These techniques could be applied in plasticulture, particularly in mulched crops. I’ll also apply software development techniques to our app, GeoHuman. Therefore, this project aims to improve my skills in these areas and gain hands-on experience with a different team. The graphical abstract of the project is presented in Figure 3.
+
+
+    Figure 3. Graphical abstract of the BEPE/FAPESP project.
+
+
+
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=1\textwidth]{figures/graphical_abstract.png}
