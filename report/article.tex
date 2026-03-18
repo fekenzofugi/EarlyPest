@@ -80,6 +80,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
     
 \section{Introduction}
 
+
     In the context of learning anomaly detection techniques applied to remote sensing, the research objectives also align with the Brazil–UK–Africa collaboration “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming”, funded by UK Research and Innovation (UKRI).
 
 
@@ -122,69 +123,66 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \subsection{Time Series Components}
         An important technique when using time series is that we can divide the data into four components: the Trend, the Seasonality, the Cyclicity and the Noise. Depending on the problem and context, these components can be analysed separately or combined to better understand the underlying patterns. In agriculture, seasonality and cyclicity are often the most informative, as crop growth and environmental conditions follow recurring patterns. In contrast, in financial markets, the trend component typically provides more insight than the others, especially for long-term analysis. The following sections provide the definitions of each component.
         
-        Figure \ref{fig:ex} presents a random time-series.
+        % Figure \ref{fig:ex} presents a random time-series.
         
-        \begin{figure}[!ht]
-            \centering
-            \includegraphics[width=0.7\textwidth]{figures/example.png}
-            \caption{Time-series example.}
-            \label{fig:ex}
-        \end{figure}
-        \FloatBarrier
+        % \begin{figure}[!ht]
+        %     \centering
+        %     \includegraphics[width=0.7\textwidth]{figures/example.png}
+        %     \caption{Time-series example.}
+        %     \label{fig:ex}
+        % \end{figure}
+        % \FloatBarrier
 
-        \subsubsection{Trend}
-            In a time series, the trend is the pattern of the overall dataset that increases or decreases. Presence of trend typically violates stationarity, as the mean changes over time.
+        % \subsubsection{Trend}
+        %     In a time series, the trend is the pattern of the overall dataset that increases or decreases. Presence of trend typically violates stationarity, as the mean changes over time.
 
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=0.7\textwidth]{figures/trend.png}
-                \caption{Time series trend example.}
-                \label{fig:trend}
-            \end{figure}
-        \FloatBarrier
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=0.7\textwidth]{figures/trend.png}
+        %         \caption{Time series trend example.}
+        %         \label{fig:trend}
+        %     \end{figure}
+        % \FloatBarrier
 
-        \subsubsection{Seasonality}
-            Seasonality refers to regular, predictable patterns that repeat at fixed intervals (e.g., daily, weekly, seasonal cycles in crop development).
+        % \subsubsection{Seasonality}
+        %     Seasonality refers to regular, predictable patterns that repeat at fixed intervals (e.g., daily, weekly, seasonal cycles in crop development).
 
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=0.7\textwidth]{figures/seasonality.png}
-                \caption{Time series seasonality example.}
-                \label{fig:seasonality}
-            \end{figure}
-            \FloatBarrier
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=0.7\textwidth]{figures/seasonality.png}
+        %         \caption{Time series seasonality example.}
+        %         \label{fig:seasonality}
+        %     \end{figure}
+        %     \FloatBarrier
 
-        \subsubsection{Cyclicity}
-            Cycles are repetitive patterns similar to seasonality but occurring over longer, less predictable time periods not aligned with calendar intervals.
+        % \subsubsection{Cyclicity}
+        %     Cycles are repetitive patterns similar to seasonality but occurring over longer, less predictable time periods not aligned with calendar intervals.
 
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=0.7\textwidth]{figures/cyclicity.png}
-                \caption{Time series cyclicity example.}
-                \label{fig:cyclicity}
-            \end{figure}
-            \FloatBarrier
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=0.7\textwidth]{figures/cyclicity.png}
+        %         \caption{Time series cyclicity example.}
+        %         \label{fig:cyclicity}
+        %     \end{figure}
+        %     \FloatBarrier
 
-        \subsubsection{Noise}
-            The noise is particularly important to verify wheather the time series is stationary of not. A time-series is stationary when its statistical properties (mean, variance, covariance) remain constant over time. If the noise is random, then the series is stationary, if the random have some kind of pattern, this means that some information of the three other components remained in the noise. Although, stationary is an important assumption for many time-series analysis techniques, in real world scenarios, is common to find non-stationary data with different data distributions within the same dataset.
+        % \subsubsection{Noise}
+        %     The noise is particularly important to verify wheather the time series is stationary of not. A time-series is stationary when its statistical properties (mean, variance, covariance) remain constant over time. If the noise is random, then the series is stationary, if the random have some kind of pattern, this means that some information of the three other components remained in the noise. Although, stationary is an important assumption for many time-series analysis techniques, in real world scenarios, is common to find non-stationary data with different data distributions within the same dataset.
 
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=0.7\textwidth]{figures/noise.png}
-                \caption{Time series noise example.}
-                \label{fig:noise}
-            \end{figure}
-            \FloatBarrier
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=0.7\textwidth]{figures/noise.png}
+        %         \caption{Time series noise example.}
+        %         \label{fig:noise}
+        %     \end{figure}
+        %     \FloatBarrier
 
-            Another frequent concept in time-series is the level which represents the average value of the time-series and can be conceptualized as the mean around which observations fluctuate. This property is common in stationary series.
+        %     Another frequent concept in time-series is the level which represents the average value of the time-series and can be conceptualized as the mean around which observations fluctuate. This property is common in stationary series.
 
     \section{Anomalies in Time-Series}
         According to Hawkings et al (1980) an anomaly is a data point or sequence that deviates from the general data distribution. In a time-series dataset, only a small fraction contains anomalies, where the majority of the data points follow expected patterns. There are different types of anomalies in time-series including global, trend, cycle and seasonal.
 
-        \subsection{Global and Local Anomalies}
-        \subsection{Trend Anomalies}
-        \subsection{Seasonal Anomalies}
-        \subsection{Cycle Anomalies}
+        In our context, the type of anomaly that we expect to find is the cycle anomaly, which is a deviation from the expected cyclic pattern. For example, in agricultural monitoring, a cycle anomaly could indicate an unexpected drop in vegetation health during a period when crops are typically thriving, potentially signaling pest infestations or disease outbreaks.
 
     \section{Methodology}
         Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series  (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
@@ -308,6 +306,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
         \subsubsection{Plastic Deteriotation}
 
         \subsubsection{Pest Attacks}
+        In order to detect pest attacks, we calculated the ration between the NDVI and time periods, if a certain decline happened outside of the harvest period or other known events, then we can consider this as an anomaly and potentially related to pest attacks. We also can use the LAI time-series maps to spatially identify areas of the field that are more affected by the pest infestation, which can help farmers to take action in specific areas of the field.
 
 
     \subsection{Evaluation Metrics}
@@ -315,6 +314,16 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \section{Results and Discussion}
 
         \subsection{Plasticulture change detection in Mossoró with Sentinel-2}
+            To validate whether S2 time-series can capture plasticulture change, we followed the methodology proposed by Mudereri et al. (2022) which analyzed S2 time-series to detect plasticulture systems in Zimbabwe. Mudereri et al. (2022) utilized the Plastic Index (PI) derived from S2 imagery to differentiate between plastic-covered and non-plastic-covered areas. They validated their findings using ground truth data collected from field surveys, demonstrating that the PI effectively captures the spectral characteristics associated with plastic materials in agricultural landscapes. In our study, we applied the same index and methodology to a melon cultivation area in Mossoró, Brazil, where plastic mulch is commonly used and often deteriorates over time.
+             
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=1\textwidth]{figures/mossoro_curv.png}
+                \caption{Spectral signatures of maize crops under different severity levels of Fall Armyworm infestation in Southern India.}
+                \label{fig:mossoro_curv}
+            \end{figure}
+            \FloatBarrier
+
             
         \subsection{FAW infestation detection in Southern India with Sentinel-2}
             To validate wheather S2 time-series can capture FAW infestation, we followed the methodology proposed by Prabhakar et al. (2022) which analyzed S2 time-series detect FAW infestation in maize crops in Southern India. Prabhakar et al. (2022) utilized ground truth data from field surveys to classify infestation severity levels (healthy, mild, moderate, severe) and correlated these with spectral signatures and vegetation index time-series derived from S2 imagery. In its field surveys, Prabhakar et al.(2022) mapped FAW infestation dated from October 26, 2018 to November 15, 2018, these dates and a severe field were selected for our proof of concept.
@@ -336,7 +345,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
             \subsubsection{Time-Series Analysis}
 
-                Figure \ref{fig:2019indiaseries} present the NDVI time-series of 2019 of a e
+                Figure \ref{fig:2019indiaseries} present the NDVI time-series of the FAW-infested field in Southern India for the year of 2019, while Figure \ref{fig:2018indiaseries} shows the NDVI time-series of the same field for the year of 2018. The temporal patterns in these time-series reveal significant differences between the two years, particularly during the period of FAW infestation. In 2018, we observe a clear decline in NDVI values corresponding to the infestation period, indicating a reduction in vegetation health and biomass due to pest damage. In contrast, the 2019 time-series shows a more stable NDVI pattern, suggesting healthier vegetation conditions without significant pest-related stress. These observations highlight the potential of Sentinel-2 time-series analysis for monitoring crop health and detecting pest infestations in agricultural fields.
 
                 \begin{figure}[!ht]
                     \centering
@@ -363,18 +372,39 @@ The use of plastic in agriculture has increased significantly in recent years, b
                     \label{fig:india_lai_time_series_maps}
                 \end{figure}
                 \FloatBarrier
+
+                Based on the results presented in Figures \ref{fig:2019indiaseries}, \ref{fig:2018indiaseries}, and \ref{fig:india_lai_time_series_maps}, we can conclude that Sentinel-2 time-series analysis is a valuable tool for monitoring crop health and detecting pest infestations. The observed decline in NDVI and LAI values during the FAW infestation period indicates significant stress on the vegetation, which can be effectively captured through remote sensing techniques. These findings underscore the potential of using satellite imagery for early detection of pest outbreaks, enabling timely interventions to mitigate crop damage and improve agricultural productivity.
                 
 
         \subsection{Anomaly Detection \& Early Alerts}
 
+        To detect anomalies in the Sentinel-2 time-series, we applied a simple threshold-based approach to identify significant declines in NDVI values that deviate from expected seasonal patterns. By analyzing historical NDVI data for the field, we established a baseline of normal vegetation dynamics and set thresholds to flag potential anomalies indicative of pest infestations. The results showed that during the FAW infestation period, there were significant drops in NDVI values that exceeded the established thresholds, confirming the presence of anomalies associated with pest damage. This approach demonstrates the feasibility of using Sentinel-2 time-series analysis for early detection of pest outbreaks, allowing farmers to take proactive measures to protect their crops.
+
+        \section{Application Development}
+            In parallel to the RSAD modeling, I participated in app development testing and remote sensing model integration for the PEZEGO pest-management app. This experience provided insights into scalable application design, optimization techniques, and model deployment strategies, which can be applied to enhance our ongoing project, GeoHuman. The PEZEGO app focuses on providing actionable insights to farmers for pest management, and my involvement in this project allowed me to contribute to the development of user-friendly interfaces and efficient data processing pipelines.
+
+        \section{Future Work}
+        Future work will prioritize a dedicated field survey campaign to validate the Sentinel-2 anomaly detection results and strengthen the reliability of the conclusions. Ground observations will be collected for both plastic mulch deterioration and FAW infestation severity, including georeferenced samples, visual scoring, and photographic records at multiple dates during the crop cycle.
+
+        These in situ measurements will be used to (i) calibrate anomaly thresholds, (ii) compare satellite-derived indicators (NDVI, LAI, PI) with observed field conditions, and (iii) quantify model performance through confusion matrices and class-wise metrics (precision, recall, F1-score). This validation step is expected to provide more concrete evidence of the method’s practical applicability and improve the robustness of early-warning recommendations for farmers.
+
 
 \section{Conclusion}
+
 
 \section{Internship Experience}
 
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=0.7\textwidth]{figures/presenting.jpeg}
+        \caption{Presenting my project results in a weekly seminar for the Computer Vision Group at the University of Sheffield.}
+        \label{fig:}
+    \end{figure}
+    \FloatBarrier
+
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.7\textwidth]{figures/meeting.jpeg}
         \caption{Presenting my project results in a weekly seminar for the Computer Vision Group at the University of Sheffield.}
         \label{fig:}
     \end{figure}
