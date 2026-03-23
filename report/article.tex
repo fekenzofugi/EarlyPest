@@ -236,26 +236,14 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \subsection{Data and Study Regions}
         This research utilizes Harmonized Sentinel-2 (S2) Level-2A surface reflectance imagery, accessed through Google Earth Engine (GEE). The Copernicus Sentinel-2 mission consists of two polar-orbiting satellites (2A and 2B) operating in sun-synchronous orbit at 786 km altitude, phased 180° apart.
 
-        \subsubsection{Mossoró, Rio Grande do Norte, Brazil}
-            The study area is located in Mossoró, Rio Grande do Norte, Brazil, where previous fieldassessments and local expertise provide a solid foundation for this research. The regionis particularly notable for its extensive use of plasticulture in melon cultivation, makingit a relevant and representative site for analyzing agricultural land-cover dynamics.Additionally, pest-management practices, such as the use of pest nets, are commonly employed to protect melon crops. Field observations conducted by the research teamalso confirmed that plastic mulch is often reused across multiple cultivation cycles,resulting in areas with visibly deteriorated plastic materials.Figure \ref{fig:study_area_mossoro} illustrates the landscape characteristics of this region.
-
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=0.8\textwidth]{figures/study_area_mossoro.png}
-                \caption{Mossoró study region, Rio Grande do Norte, Brazil, showing plasticulture fields.}
-                \label{fig:study_area_mossoro}
-            \end{figure}
-            \FloatBarrier
-
-        % \subsubsection{Ejura, Ghana, West Africa}
-
-        %     Figure \ref{fig:study_area_ghana} presents the diverse agricultural landscape of Ejura.
+        % \subsubsection{Mossoró, Rio Grande do Norte, Brazil}
+        %     The study area is located in Mossoró, Rio Grande do Norte, Brazil, where previous fieldassessments and local expertise provide a solid foundation for this research. The regionis particularly notable for its extensive use of plasticulture in melon cultivation, makingit a relevant and representative site for analyzing agricultural land-cover dynamics.Additionally, pest-management practices, such as the use of pest nets, are commonly employed to protect melon crops. Field observations conducted by the research teamalso confirmed that plastic mulch is often reused across multiple cultivation cycles,resulting in areas with visibly deteriorated plastic materials.Figure \ref{fig:study_area_mossoro} illustrates the landscape characteristics of this region.
 
         %     \begin{figure}[!ht]
         %         \centering
-        %         \includegraphics[width=1\textwidth]{figures/study_area_ghana.png}
-        %         \caption{Ejura study region, Ghana, West Africa, showing diverse crop systems.}
-        %         \label{fig:study_area_ghana}
+        %         \includegraphics[width=0.8\textwidth]{figures/study_area_mossoro.png}
+        %         \caption{Mossoró study region, Rio Grande do Norte, Brazil, showing plasticulture fields.}
+        %         \label{fig:study_area_mossoro}
         %     \end{figure}
         %     \FloatBarrier
 
@@ -268,6 +256,18 @@ The use of plastic in agriculture has increased significantly in recent years, b
                 \includegraphics[width=1\textwidth]{figures/study_area_india.png}
                 \caption{Kurnool and Gadwal districts, Southern India, showing maize cultivation areas.}
                 \label{fig:study_area_india}
+            \end{figure}
+            \FloatBarrier
+
+            \subsubsection{Ejura, Ghana, West Africa}
+
+            Figure \ref{fig:study_area_ghana} presents the diverse agricultural landscape of Ejura.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=1\textwidth]{figures/study_area_ghana.png}
+                \caption{Ejura study region, Ghana, West Africa, showing diverse crop systems.}
+                \label{fig:study_area_ghana}
             \end{figure}
             \FloatBarrier
 
@@ -293,24 +293,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
         \subsubsection{Spectral Indices}
 
-            Spectral vegetation indices (SVI) derived from remote sensing data provide quantitative measures of crop health and stress. These indices are particularly effective for detecting impacts of diseases and pest invasions. This research employs multiple indices to capture different aspects of plant health:
-
-            Table \ref{tab:plastic_indices} summarizes the plastic indices used to detect plasticulture systems
-
-                \begin{table}[!h]
-                \centering
-                \caption{Spectral plastic indices and corresponding equations using Sentinel-2 bands.}
-                \label{tab:plastic_indices}
-                \renewcommand{\arraystretch}{1.4}
-                \small
-                    \begin{tabular}{p{3cm} p{3cm} p{3cm}}
-                    \textbf{Index} & \textbf{Equation} & \textbf{Reference} \\
-                    \hline
-                    Plastic Index & 
-                    $\frac{SWIR - NIR}{SWIR + NIR}$ & 
-                    Mudereri et al., 2022
-                    \end{tabular}
-                \end{table}
+            % Spectral vegetation indices (SVI) derived from remote sensing data provide quantitative measures of crop health and stress. These indices are particularly effective for detecting impacts of diseases and pest invasions. This research employs multiple indices to capture different aspects of plant health:
 
                 Studies from Dzurune et al. (2025), Bilintoh et al. (2019), Prabhakar et al. (2022), have demostrated the effectiveness of Normalized Difference Vegetation Index (NDVI) Enhanced Vegetation Index (EVI) and Leaf Area Index (LAI), respectively, in detecting pest infestations. Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
 
@@ -335,32 +318,29 @@ The use of plastic in agriculture has increased significantly in recent years, b
                     $3.618 \times \text{EVI} - 0.118$ & 
                     Boegh et al., 2002 \\
                     \end{tabular}
+                    
                 \end{table}
                 
         \subsubsection{Time Series Smoothing}
         Time series smoothing is a technique used to reduce noise and improve data quality, making underlying patterns easier to analyse. In this study, we applied Triple Exponential Smoothing (TES) / Holt–Winters, which effectively models the level, trend, and seasonality components commonly present in agricultural satellite time series. \ref{appendix1} presents different smoothing techniques and its mathematical formulations.
 
     \subsection{Anomaly Detection model}
-        \subsubsection{Plastic Deteriotation}
 
         \subsubsection{Pest Attacks}
         In order to detect pest attacks, we calculated the ration between the NDVI and time periods, if a certain decline happened outside of the harvest period or other known events, then we can consider this as an anomaly and potentially related to pest attacks. We also can use the LAI time-series maps to spatially identify areas of the field that are more affected by the pest infestation, which can help farmers to take action in specific areas of the field.
 
-
-    \subsection{Evaluation Metrics}
-
     \section{Results and Discussion}
 
-        \subsection{Plasticulture change detection in Mossoró with Sentinel-2}
-            To validate whether S2 time-series can capture plasticulture change, we followed the methodology proposed by Mudereri et al. (2022) which analyzed S2 time-series to detect plasticulture systems in Zimbabwe. Mudereri et al. (2022) utilized the Plastic Index (PI) derived from S2 imagery to differentiate between plastic-covered and non-plastic-covered areas. They validated their findings using ground truth data collected from field surveys, demonstrating that the PI effectively captures the spectral characteristics associated with plastic materials in agricultural landscapes. In our study, we applied the same index and methodology to a melon cultivation area in Mossoró, Brazil, where plastic mulch is commonly used and often deteriorates over time.
+        % \subsection{Plasticulture change detection in Mossoró with Sentinel-2}
+        %     To validate whether S2 time-series can capture plasticulture change, we followed the methodology proposed by Mudereri et al. (2022) which analyzed S2 time-series to detect plasticulture systems in Zimbabwe. Mudereri et al. (2022) utilized the Plastic Index (PI) derived from S2 imagery to differentiate between plastic-covered and non-plastic-covered areas. They validated their findings using ground truth data collected from field surveys, demonstrating that the PI effectively captures the spectral characteristics associated with plastic materials in agricultural landscapes. In our study, we applied the same index and methodology to a melon cultivation area in Mossoró, Brazil, where plastic mulch is commonly used and often deteriorates over time.
              
-            \begin{figure}[!ht]
-                \centering
-                \includegraphics[width=1\textwidth]{figures/mossoro_curv.png}
-                \caption{Spectral signatures of maize crops under different severity levels of Fall Armyworm infestation in Southern India.}
-                \label{fig:mossoro_curv}
-            \end{figure}
-            \FloatBarrier
+        %     \begin{figure}[!ht]
+        %         \centering
+        %         \includegraphics[width=1\textwidth]{figures/mossoro_curv.png}
+        %         \caption{Spectral signatures of maize crops under different severity levels of Fall Armyworm infestation in Southern India.}
+        %         \label{fig:mossoro_curv}
+        %     \end{figure}
+        %     \FloatBarrier
 
             
         \subsection{FAW infestation detection in Southern India with Sentinel-2}
