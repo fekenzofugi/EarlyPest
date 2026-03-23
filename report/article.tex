@@ -130,7 +130,9 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \FloatBarrier
 
     \section{Methodology}
-        Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series  (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
+        At the University
+
+        Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
 
         \begin{figure}[!ht]
             \centering
@@ -143,20 +145,9 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \subsection{Data and Study Regions}
         This research utilizes Harmonized Sentinel-2 (S2) Level-2A surface reflectance imagery, accessed through Google Earth Engine (GEE). The Copernicus Sentinel-2 mission consists of two polar-orbiting satellites (2A and 2B) operating in sun-synchronous orbit at 786 km altitude, phased 180° apart.
 
-        % \subsubsection{Mossoró, Rio Grande do Norte, Brazil}
-        %     The study area is located in Mossoró, Rio Grande do Norte, Brazil, where previous fieldassessments and local expertise provide a solid foundation for this research. The regionis particularly notable for its extensive use of plasticulture in melon cultivation, makingit a relevant and representative site for analyzing agricultural land-cover dynamics.Additionally, pest-management practices, such as the use of pest nets, are commonly employed to protect melon crops. Field observations conducted by the research teamalso confirmed that plastic mulch is often reused across multiple cultivation cycles,resulting in areas with visibly deteriorated plastic materials.Figure \ref{fig:study_area_mossoro} illustrates the landscape characteristics of this region.
-
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=0.8\textwidth]{figures/study_area_mossoro.png}
-        %         \caption{Mossoró study region, Rio Grande do Norte, Brazil, showing plasticulture fields.}
-        %         \label{fig:study_area_mossoro}
-        %     \end{figure}
-        %     \FloatBarrier
-
         \subsubsection{Kurnool and Gadwal Districts, Southern India}
 
-            Prabhakar et al. (2022) conducted field surveys in Kurnool and Gadwal districts ofSouthern India to map FAW infestations in maize crops (sorghum). In his field surveys,he mapped the regions as healthy, low, medium, and severe infestation levels. Based on that,we selected one field classified as severe infestation for our proof of concept. The Prabhakaret al. (2022) field survey confirmed that the FAW infestation occurred between October 26, 2018 andNovember 15, 2018. Figure \ref{fig:study_area_india} shows the agriculturallandscape characteristics of these districts.
+            \cite{prabhakar2022detecting} conducted field surveys in Kurnool and Gadwal districts of Southern India to map FAW infestations in maize crops (sorghum). In his field surveys,he mapped the regions as healthy, low, medium, and severe infestation levels. Based on that,we selected one field classified as severe infestation for our proof of concept. The \cite{prabhakar2022detecting} field survey confirmed that the FAW infestation occurred between October 26, 2018 andNovember 15, 2018. Figure \ref{fig:study_area_india} shows the agriculturallandscape characteristics of these districts.
 
             \begin{figure}[!ht]
                 \centering
@@ -197,16 +188,16 @@ The use of plastic in agriculture has increased significantly in recent years, b
             In our context, the type of anomaly that we expect to find is the cycle anomaly, which is a deviation from the expected cyclic pattern. For example, in agricultural monitoring, a cycle anomaly could indicate an unexpected drop in vegetation health during a period when crops are typically thriving, potentially signaling pest infestations or disease outbreaks.
         
         \subsubsection{Time Series Smoothing}
-        Time series smoothing is a technique used to reduce noise and improve data quality, making underlying patterns easier to analyse. In this study, we applied Triple Exponential Smoothing (TES) / Holt–Winters, which effectively models the level, trend, and seasonality components commonly present in agricultural satellite time series. \ref{appendix1} presents different smoothing techniques and its mathematical formulations.
+        Time series smoothing is a technique used to reduce noise and improve data quality, making underlying patterns easier to analyse. In this study, we applied Triple Exponential Smoothing (TES), which effectively models the level, trend, and seasonality components commonly present in agricultural satellite time series. \ref{appendix1} presents different smoothing techniques and its mathematical formulations.
 
     \subsection{Preprocessing Sentinel-2 Imagery}
-        In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity (Fu et al., 2025). The most meaningful deviations are usually those that are significantly different from the norm.
+        In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity \citep{fu2025lightweight}. The most meaningful deviations are usually those that are significantly different from the norm.
 
-        Preprocessing is a crucial step in machine learning and data pipelines (Tawakuli et al., 2025). It employs various techniques to ensure that the data fed into a model is clean, consistent, and informative, which directly influences its performance and reliability (Zheng et al., 2021). This is especially important in RSAD modeling. In RS imagery, data quality can be compromised by factors such as Earth's geometric effects resulting from its curvature and rotation, atmospheric conditions like cloud cover, sensor noise, seasonal variations, and landscape complexity (Fu et al., 2025).
+        Preprocessing is a crucial step in machine learning and data pipelines \citep{tawakuli2025survey}. It employs various techniques to ensure that the data fed into a model is clean, consistent, and informative, which directly influences its performance and reliability \citep{zheng2021improved}. This is especially important in RSAD modeling. In RS imagery, data quality can be compromised by factors such as Earth's geometric effects resulting from its curvature and rotation, atmospheric conditions like cloud cover, sensor noise, seasonal variations, and landscape complexity \citep{fu2025lightweight}.
 
         \subsubsection{Spectral Indices}
 
-            Studies from Dzurune et al. (2025), Bilintoh et al. (2019), Prabhakar et al. (2022), have demostrated the effectiveness of Normalized Difference Vegetation Index (NDVI) Enhanced Vegetation Index (EVI) and Leaf Area Index (LAI), respectively, in detecting pest infestations. Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
+            Studies from \cite{bilintoh2019remote} and \cite{prabhakar2022detecting}, have demostrated the effectiveness of using spectral indices in anomaly detection. They used indices such as the Normalized Difference Vegetation Index (NDVI), the Enhanced Vegetation Index (EVI) and the Leaf Area Index (LAI). Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
 
             \begin{table}[ht]
             \centering
@@ -238,24 +229,12 @@ The use of plastic in agriculture has increased significantly in recent years, b
         In order to detect pest attacks, we calculated the ration between the NDVI and time periods, if a certain decline happened outside of the harvest period or other known events, then we can consider this as an anomaly and potentially related to pest attacks. We also can use the LAI time-series maps to spatially identify areas of the field that are more affected by the pest infestation, which can help farmers to take action in specific areas of the field.
 
     \section{Results and Discussion}
-
-        % \subsection{Plasticulture change detection in Mossoró with Sentinel-2}
-        %     To validate whether S2 time-series can capture plasticulture change, we followed the methodology proposed by Mudereri et al. (2022) which analyzed S2 time-series to detect plasticulture systems in Zimbabwe. Mudereri et al. (2022) utilized the Plastic Index (PI) derived from S2 imagery to differentiate between plastic-covered and non-plastic-covered areas. They validated their findings using ground truth data collected from field surveys, demonstrating that the PI effectively captures the spectral characteristics associated with plastic materials in agricultural landscapes. In our study, we applied the same index and methodology to a melon cultivation area in Mossoró, Brazil, where plastic mulch is commonly used and often deteriorates over time.
-             
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=1\textwidth]{figures/mossoro_curv.png}
-        %         \caption{Spectral signatures of maize crops under different severity levels of Fall Armyworm infestation in Southern India.}
-        %         \label{fig:mossoro_curv}
-        %     \end{figure}
-        %     \FloatBarrier
-
             
         \subsection{FAW infestation detection in Southern India with Sentinel-2}
-            To validate wheather S2 time-series can capture FAW infestation, we followed the methodology proposed by Prabhakar et al. (2022) which analyzed S2 time-series detect FAW infestation in maize crops in Southern India. Prabhakar et al. (2022) utilized ground truth data from field surveys to classify infestation severity levels (healthy, mild, moderate, severe) and correlated these with spectral signatures and vegetation index time-series derived from S2 imagery. In its field surveys, Prabhakar et al.(2022) mapped FAW infestation dated from October 26, 2018 to November 15, 2018, these dates and a severe field were selected for our proof of concept.
+            To validate wheather S2 time-series can capture FAW infestation, we followed the methodology proposed by \cite{prabhakar2022detecting} which analyzed S2 time-series detect FAW infestation in maize crops in Southern India. It utilized ground truth data from field surveys to classify infestation severity levels (healthy, mild, moderate, severe) and correlated these with spectral signatures and vegetation index time-series derived from S2 imagery. In its field surveys, \cite{prabhakar2022detecting} mapped FAW infestation dated from October 26, 2018 to November 15, 2018, these dates and a severe field were selected for our proof of concept.
 
             \subsubsection{Spectral Signatures of Pest Infestation}
-                Based on the severity classification framework proposed by Prabhakar et al. (2022),FAW damage is categorized into four levels: healthy (Grade-1), low (Grade-2), medium (Grade-3), and severe (Grade-4) infestation. In our study, we used the severe cases of the Prabhakar et al. (2022) field survey data available only at two key moments:a pre-infestation survey, representing healthy crop conditions, and a post-infestation survey,corresponding to severe FAW damage.These two surveys were used as temporal anchors to characterize the spectral responseof maize crops before and after the pest outbreak. The resulting spectral signatures associated with each severity level are presented in Figure\ref{fig:india_spectral_severity_classification}.
+                Based on the severity classification framework proposed by \cite{prabhakar2022detecting}, FAW damage is categorized into four levels: healthy (Grade-1), low (Grade-2), medium (Grade-3), and severe (Grade-4) infestation. In our study, we used the severe cases of the \cite{prabhakar2022detecting} field survey data available only at two key moments:a pre-infestation survey, representing healthy crop conditions, and a post-infestation survey,corresponding to severe FAW damage.These two surveys were used as temporal anchors to characterize the spectral responseof maize crops before and after the pest outbreak. The resulting spectral signatures associated with each severity level are presented in Figure\ref{fig:india_spectral_severity_classification}.
                 
                 \begin{figure}[!ht]
                     \centering
@@ -269,7 +248,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
  
                 Harvest events cause abrupt transitions from high NDVI (green, healthy) to low NDVI  (senescence, yellow/brown), which must be distinguished from pest-related declines. Pest-related NDVI declines are more gradual and associated with specific temporal patterns linked to pest life cycles and feeding behavior.
 
-            \subsubsection{Time-Series Analysis}
+            \subsubsection{NDVI Time-Series Analysis}
 
                 Figure \ref{fig:2019indiaseries} present the NDVI time-series of the FAW-infested field in Southern India for the year of 2019, while Figure \ref{fig:2018indiaseries} shows the NDVI time-series of the same field for the year of 2018. The temporal patterns in these time-series reveal significant differences between the two years, particularly during the period of FAW infestation. In 2018, we observe a clear decline in NDVI values corresponding to the infestation period, indicating a reduction in vegetation health and biomass due to pest damage. In contrast, the 2019 time-series shows a more stable NDVI pattern, suggesting healthier vegetation conditions without significant pest-related stress. These observations highlight the potential of Sentinel-2 time-series analysis for monitoring crop health and detecting pest infestations in agricultural fields.
 
@@ -301,41 +280,90 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
                 Based on the results presented in Figures \ref{fig:2019indiaseries}, \ref{fig:2018indiaseries}, and \ref{fig:india_lai_time_series_maps}, we can conclude that Sentinel-2 time-series analysis is a valuable tool for monitoring crop health and detecting pest infestations. The observed decline in NDVI and LAI values during the FAW infestation period indicates significant stress on the vegetation, which can be effectively captured through remote sensing techniques. These findings underscore the potential of using satellite imagery for early detection of pest outbreaks, enabling timely interventions to mitigate crop damage and improve agricultural productivity.
         
-        \subsection{FAW infestation detection in Ghana with Sentinel-2}
+            \subsection{FAW infestation detection in Ghana with Sentinel-2}
 
-        \subsection{Anomaly Detection \& Early Alerts}
+            In Ghana, we followed the study by \cite{bilintoh2019remote}, who performed field validation in Ejura between May and July 2018 to assess the Fall Armyworm (FAW) impact from the 2017 growing season (April to September). Specifically, we utilized his approach of combining remote sensing with statistical techniques to assess the uncertainty in factors related to infestation in maize. 
 
-        To detect anomalies in the Sentinel-2 time-series, we applied a simple threshold-based approach to identify significant declines in NDVI values that deviate from expected seasonal patterns. By analyzing historical NDVI data for the field, we established a baseline of normal vegetation dynamics and set thresholds to flag potential anomalies indicative of pest infestations. The results showed that during the FAW infestation period, there were significant drops in NDVI values that exceeded the established thresholds, confirming the presence of anomalies associated with pest damage. This approach demonstrates the feasibility of using Sentinel-2 time-series analysis for early detection of pest outbreaks, allowing farmers to take proactive measures to protect their crops.
+            However, as noted in the original work, the lack of specific dates for certain phenological stages or infestation events made the analysis difficult. This difficulty was compounded by gaps in the temporal resolution of satellite imagery and the presence of extensive cloud cover during the 2017 growing season, which limited the ability to capture the full maize phenological cycle as presented in Figure \ref{fig:extensive-cc}.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.8\textwidth]{figures/EXTENSIVE-CC.png}
+                \caption{NDVI time series of 2017 in Ejura, Ghana, illustrating the sparse data availability due to cloud cover.}
+                \label{fig:extensive-cc}
+            \end{figure}
+            \FloatBarrier
+
+            \subsubsection{NDVI Time-Series Analysis}
+
+            Figures \ref{fig:2019ghanaseries} and \ref{fig:2020ghanaseries} present the NDVI time-series for subsequent years. While these series offer better temporal coverage than the 2017 data, they highlight the persistent challenge of defining a "normal" maize profile in this region.
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.8\textwidth]{figures/gh1.png}
+                \caption{NDVI time series of 2019 in Ejura, Ghana.}
+                \label{fig:2019ghanaseries}
+            \end{figure}
+            \FloatBarrier
+
+            \begin{figure}[!ht]
+                \centering
+                \includegraphics[width=0.8\textwidth]{figures/gh2.png}
+                \caption{NDVI time series of 2020 in Ejura, Ghana.}
+                \label{fig:2020ghanaseries}
+            \end{figure}
+            \FloatBarrier
+
+            The interpretation of these spectral curves is further complicated by the heterogeneous nature of the farming landscape in Ejura. \cite{bilintoh2019remote} field surveys revealed that local farmers rarely maintain monoculture maize plots; instead, they practice complex intercropping and crop rotation. The analyzed fields contained a mixture of crops, including plantain, yam, rice, beans, cassava, groundnuts, and watermelon. Specifically, beans and groundnuts are frequently rotated with maize to maintain soil nitrogen levels. 
+
+            This mixture of crop types, each with distinct phenological timings and greenness peaks, creates a "mixed-pixel" effect in the Sentinel-2 data. Consequently, the observed growth cycles deviate significantly from standard maize models, as the integrated spectral signature reflects multiple overlapping stages of planting and harvesting. This agricultural diversity, coupled with the lack of precise infestation timestamps, necessitates a robust univariate analysis capable of distinguishing between pest-induced stress and the inherent noise of intercropped vegetation dynamics.
 
         \section{Application Development}
             In parallel to the RSAD modeling, I participated in app development testing and remote sensing model integration for the PEZEGO pest-management app. This experience provided insights into scalable application design, optimization techniques, and model deployment strategies, which can be applied to enhance our ongoing project, GeoHuman. The PEZEGO app focuses on providing actionable insights to farmers for pest management, and my involvement in this project allowed me to contribute to the development of user-friendly interfaces and efficient data processing pipelines.
 
-        \section{Future Work}
-        Future work will prioritize a dedicated field survey campaign to validate the Sentinel-2 anomaly detection results and strengthen the reliability of the conclusions. Ground observations will be collected for both plastic mulch deterioration and FAW infestation severity, including georeferenced samples, visual scoring, and photographic records at multiple dates during the crop cycle.
-
-        These in situ measurements will be used to (i) calibrate anomaly thresholds, (ii) compare satellite-derived indicators (NDVI, LAI, PI) with observed field conditions, and (iii) quantify model performance through confusion matrices and class-wise metrics (precision, recall, F1-score). This validation step is expected to provide more concrete evidence of the method’s practical applicability and improve the robustness of early-warning recommendations for farmers.
-
-
 \section{Conclusion}
 
+This research internship demonstrated the potential of RSAD using Sentinel-2 time-series to identify pest-induced stress in agricultural systems. The case study in Southern India validated the approach, as NDVI and LAI declines aligned with documented FAW infestation periods, confirming that vegetation indices can capture meaningful stress signals.
+In contrast, experiments in Ejura, Ghana, revealed key limitations in real-world settings. Persistent cloud cover, irregular temporal sampling, and complex intercropping reduced the separability between normal phenological variation and anomalies. These challenges highlight the limitations of univariate approaches and the need for more robust representations.
+
+From a methodological perspective, this work shows that while univariate time-series analysis can serve as a lightweight and interpretable baseline for RSAD, it is insufficient for operational deployment in diverse agricultural landscapes. The primary bottleneck is not only model capacity, but data quality and contextual ambiguity, particularly in the absence of synchronized ground-truth observations. Consequently, anomaly attribution remains uncertain, as deviations may result from multiple confounding factors such as harvesting cycles, water stress, or mixed-pixel effects.
+
+Overall, this work establishes a proof of concept for RSAD in agricultural monitoring while clearly identifying its current limitations. More importantly, it defines a structured pathway toward operational systems by emphasizing the joint need for (i) richer multimodal data representations and (ii) reliable ground-truth acquisition pipelines. These components are essential to move from exploratory analysis to real-world decision tools in agriculture.
+
+\section{Future Work}
+Building on the results of this internship, several avenues for future research are proposed to enhance the robustness of agricultural anomaly detection:
+
+\begin{itemize}
+    \item \textbf{Plasticulture Application:} The RSAD techniques refined during this period will be further explored in the context of plasticulture in Brazil, specifically to monitor material deterioration and the subtle spectral shifts associated with the use of protective netting.
+    \item \textbf{Multivariate Time-Series Integration:} Future work should transition from univariate analysis to Multivariate Time-Series (MTS) representations. By simultaneously monitoring multiple spectral indices (e.g., NDVI, EVI, and NDWI) along with SAR (Synthetic Aperture Radar) data, models can better differentiate between water stress, harvesting, and pest damage, significantly reducing false-positive rates.
+    \item \textbf{Ground-Truth Data Collection:} To move beyond a proof of concept, future efforts must prioritize the collection of date-stamped field surveys. Integrating the GeoHuman and PEZEGO applications to collect real-time farmer observations will be crucial for creating the labeled datasets necessary to validate and train supervised anomaly detection models.
+    \item \textbf{Advanced Machine Learning Architectures:} Exploring more complex deep learning architectures, such as Recurrent Neural Networks (RNNs) or Transformers with Attention Mechanisms, could provide better handling of the temporal dependencies and irregular data gaps common in tropical regions like Ghana.
+\end{itemize}
 
 \section{Internship Experience}
+
+    During the internship, Prof.\ Jefersson organized weekly seminars for the Computer Vision Research Group, where students presented their work or relevant research topics. I contributed by presenting my research ideas and discussing them with the group (Figure~\ref{fig:bites}), receiving valuable feedback that helped refine my approach. These seminars also provided the opportunity to learn a wide range of methodologies and perspectives from different research topics, further enriching my understanding of computer vision and machine learning.
 
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=0.7\textwidth]{figures/presenting.jpeg}
         \caption{Presenting my project results in a weekly seminar for the Computer Vision Group at the University of Sheffield.}
-        \label{fig:}
+        \label{fig:bites}
     \end{figure}
     \FloatBarrier
+
+    I also participated in meetings and workshops with the Pervasive Computing Research Group led by Prof. Po Yang, focused on the “SmartPest-Ghana: Exploring LLM-driven mobile solutions for climate-smart pest management in maize farming” project (for more information, visit \url{https://iuk-business-connect.org.uk/smartpest-ghana/}). This collaborative initiative involves the University of Sheffield, the University of Ghana, and UNICAMP. During these meetings, each member presented their progress and discussed potential solutions and research directions. These interactions were particularly valuable, as the multi-institutional nature of the project provided a wealth of different ideas and interdisciplinary insights. Engaging with experts from different regions allowed me to understand the unique challenges of West African agriculture, significantly broadening my research horizon. Figure~\ref{fig:presghana} shows my presentation to the research groups.
 
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=0.7\textwidth]{figures/meeting.jpeg}
-        \caption{Presenting my project results in a weekly seminar for the Computer Vision Group at the University of Sheffield.}
-        \label{fig:}
+        \caption{Presenting my project results in a weekly seminar for the Pervasive Computing Group at the University of Sheffield.}
+        \label{fig:presghana}
     \end{figure}
     \FloatBarrier
+
+    The exchange program significantly enhanced my technical skills while profoundly enriching my personal life. Beyond the academic and research achievements, this experience expanded my horizons, exposing me to a diverse array of perspectives and global cultures. Engaging with researchers and students from different backgrounds fostered a new level of cultural awareness and intellectual openness that I will carry with me for the rest of my life.
+
 
 \clearpage
 \bibliography{kenzo}
@@ -428,7 +456,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
             \textbf{Application:} Applicable to agricultural time-series when seasonality is not a dominant factor.
 
-        \subsubsection{Triple Exponential Smoothing (TES) / Holt-Winters}
+        \subsubsection{Triple Exponential Smoothing (TES)}
             TES represents the most comprehensive smoothing approach, modeling level, trend, and seasonality simultaneously. This method is most appropriate for agricultural satellite time-series, which exhibit all three components.
 
             \[
