@@ -118,9 +118,6 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
     This research internship abroad has one main goal: to increase knowledge through collaboration with researchers at the University of Sheffield, focusing on learning RSAD techniques and developing applications. We will explore whether RSAD in time series can be used in the agricultural context. These techniques could be applied in plasticulture, particularly in mulched crops. I’ll also apply software development techniques to our app, GeoHuman. Therefore, this project aims to improve my skills in these areas and gain hands-on experience with a different team. The graphical abstract of the project is presented in Figure 3.
 
-
-    Figure 3. Graphical abstract of the BEPE/FAPESP project.
-
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=1\textwidth]{figures/graphical_abstract.png}
@@ -147,7 +144,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
         \subsubsection{Kurnool and Gadwal Districts, Southern India}
 
-            \cite{prabhakar2022detecting} conducted field surveys in Kurnool and Gadwal districts of Southern India to map FAW infestations in maize crops (sorghum). In his field surveys,he mapped the regions as healthy, low, medium, and severe infestation levels. Based on that,we selected one field classified as severe infestation for our proof of concept. The \cite{prabhakar2022detecting} field survey confirmed that the FAW infestation occurred between October 26, 2018 andNovember 15, 2018. Figure \ref{fig:study_area_india} shows the agriculturallandscape characteristics of these districts.
+            \cite{prabhakar2022detecting} conducted field surveys in Kurnool and Gadwal districts of Southern India to map FAW infestations in maize crops (sorghum). In his field surveys, the author mapped the regions as healthy, low, medium, and severe infestation levels. Based on that,we selected one field classified as severe infestation for our proof of concept. The \cite{prabhakar2022detecting} field survey confirmed that the FAW infestation occurred between October 26, 2018 and November 15, 2018. Figure \ref{fig:study_area_india} shows the agricultural landscape characteristics of these districts.
 
             \begin{figure}[!ht]
                 \centering
@@ -159,7 +156,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
             \subsubsection{Ejura, Ghana, West Africa}
 
-            Figure \ref{fig:study_area_ghana} presents the diverse agricultural landscape of Ejura.
+            Figure \ref{fig:study_area_ghana} presents the diverse agricultural landscape of Ejura, where \cite{bilintoh2019remote} conducted field validation from April to September 2017 to confirm FAW infestations. Located in the Ashanti Region's transition zone, the district features a mix of grassland and woodland with an annual rainfall of 1,200--1,500 mm and average temperatures between 26.4°C and 27.5°C. Agriculture is the primary livelihood for the population of 85,000, with a landscape dominated by commercial maize and watermelon alongside subsistence crops like yam, cassava, and plantain. The region's high vulnerability to pests is exacerbated by its complex farming systems, where frequent intercropping and crop rotation.
 
             \begin{figure}[!ht]
                 \centering
@@ -337,7 +334,7 @@ Building on the results of this internship, several avenues for future research 
     \item \textbf{Plasticulture Application:} The RSAD techniques refined during this period will be further explored in the context of plasticulture in Brazil, specifically to monitor material deterioration and the subtle spectral shifts associated with the use of protective netting.
     \item \textbf{Multivariate Time-Series Integration:} Future work should transition from univariate analysis to Multivariate Time-Series (MTS) representations. By simultaneously monitoring multiple spectral indices (e.g., NDVI, EVI, and NDWI) along with SAR (Synthetic Aperture Radar) data, models can better differentiate between water stress, harvesting, and pest damage, significantly reducing false-positive rates.
     \item \textbf{Ground-Truth Data Collection:} To move beyond a proof of concept, future efforts must prioritize the collection of date-stamped field surveys. Integrating the GeoHuman and PEZEGO applications to collect real-time farmer observations will be crucial for creating the labeled datasets necessary to validate and train supervised anomaly detection models.
-    \item \textbf{Advanced Machine Learning Architectures:} Exploring more complex deep learning architectures, such as Recurrent Neural Networks (RNNs) or Transformers with Attention Mechanisms, could provide better handling of the temporal dependencies and irregular data gaps common in tropical regions like Ghana.
+    \item \textbf{Advanced Machine Learning Architectures:} Exploring more complex deep learning architectures, such as Graph Neural Networks (GNNs) or Transformers with Attention Mechanisms, could provide better solution of the problem, combining temporal and spatial dependencies of the data.
 \end{itemize}
 
 \section{Internship Experience}
