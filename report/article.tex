@@ -128,97 +128,6 @@ The use of plastic in agriculture has increased significantly in recent years, b
         \label{fig:graphical_abstract}
     \end{figure}
     \FloatBarrier
-\section{Time-Series Analysis}
-    \subsection{Time-Series Definitions}
-        Time series is a sequence of points indexed by time stamps \citep{zamanzadeh2024deep}. This kind of data is present in various fields with different applications such as finantial analysis, environmental changes, and crop monitoring. 
-
-        \subsubsection{Univariate Time-Series (UTS)}
-            A univariate time-series represents a single variable (such as NDVI) measured at a single pixel location over time \citep{zamanzadeh2024deep}. For a pixel observed at $t$ timestamps, the UTS $X$ is represented as:
-
-            \[
-            X = (x_1, x_2, \ldots, x_t)
-            \]
-
-            where $x_i$ represents the feature value at timestamp $i \in T$ and $T = \{1, 2, \ldots, t\}$.
-
-        \subsubsection{Multivariate Time-Series (MTS)}
-            A multivariate time-series represents multiple variables that exhibit both temporal dependencies (correlations across time) and spatial dependencies (correlations between variables) \citep{zamanzadeh2024deep}. For a pixel with $d$ features observed over $t$ timestamps:
-
-            \begin{equation}
-            X = (X_1, X_2, \ldots, X_t)
-            = \bigl(
-                (x_1^1, x_1^2, \ldots, x_1^d),
-                (x_2^1, x_2^2, \ldots, x_2^d),
-                \ldots,
-                (x_t^1, x_t^2, \ldots, x_t^d)
-                \bigr)
-            \end{equation}
-
-            where $X_i = (x_i^1, x_i^2, \ldots, x_i^d)$ represents the feature vector at time $i$, and $x_i^j$ is the observation at time $i$ for the $j$-th dimension.
-
-    \subsection{Time Series Components}
-        An important technique when using time series is that we can divide the data into four components: the Trend, the Seasonality, the Cyclicity and the Noise. Depending on the problem and context, these components can be analysed separately or combined to better understand the underlying patterns. In agriculture, seasonality and cyclicity are often the most informative, as crop growth and environmental conditions follow recurring patterns. In contrast, in financial markets, the trend component typically provides more insight than the others, especially for long-term analysis. The following sections provide the definitions of each component.
-        
-        % Figure \ref{fig:ex} presents a random time-series.
-        
-        % \begin{figure}[!ht]
-        %     \centering
-        %     \includegraphics[width=0.7\textwidth]{figures/example.png}
-        %     \caption{Time-series example.}
-        %     \label{fig:ex}
-        % \end{figure}
-        % \FloatBarrier
-
-        % \subsubsection{Trend}
-        %     In a time series, the trend is the pattern of the overall dataset that increases or decreases. Presence of trend typically violates stationarity, as the mean changes over time.
-
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=0.7\textwidth]{figures/trend.png}
-        %         \caption{Time series trend example.}
-        %         \label{fig:trend}
-        %     \end{figure}
-        % \FloatBarrier
-
-        % \subsubsection{Seasonality}
-        %     Seasonality refers to regular, predictable patterns that repeat at fixed intervals (e.g., daily, weekly, seasonal cycles in crop development).
-
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=0.7\textwidth]{figures/seasonality.png}
-        %         \caption{Time series seasonality example.}
-        %         \label{fig:seasonality}
-        %     \end{figure}
-        %     \FloatBarrier
-
-        % \subsubsection{Cyclicity}
-        %     Cycles are repetitive patterns similar to seasonality but occurring over longer, less predictable time periods not aligned with calendar intervals.
-
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=0.7\textwidth]{figures/cyclicity.png}
-        %         \caption{Time series cyclicity example.}
-        %         \label{fig:cyclicity}
-        %     \end{figure}
-        %     \FloatBarrier
-
-        % \subsubsection{Noise}
-        %     The noise is particularly important to verify wheather the time series is stationary of not. A time-series is stationary when its statistical properties (mean, variance, covariance) remain constant over time. If the noise is random, then the series is stationary, if the random have some kind of pattern, this means that some information of the three other components remained in the noise. Although, stationary is an important assumption for many time-series analysis techniques, in real world scenarios, is common to find non-stationary data with different data distributions within the same dataset.
-
-        %     \begin{figure}[!ht]
-        %         \centering
-        %         \includegraphics[width=0.7\textwidth]{figures/noise.png}
-        %         \caption{Time series noise example.}
-        %         \label{fig:noise}
-        %     \end{figure}
-        %     \FloatBarrier
-
-        %     Another frequent concept in time-series is the level which represents the average value of the time-series and can be conceptualized as the mean around which observations fluctuate. This property is common in stationary series.
-
-    \section{Anomalies in Time-Series}
-        According to Hawkings et al (1980) an anomaly is a data point or sequence that deviates from the general data distribution. In a time-series dataset, only a small fraction contains anomalies, where the majority of the data points follow expected patterns. There are different types of anomalies in time-series including global, trend, cycle and seasonal.
-
-        In our context, the type of anomaly that we expect to find is the cycle anomaly, which is a deviation from the expected cyclic pattern. For example, in agricultural monitoring, a cycle anomaly could indicate an unexpected drop in vegetation health during a period when crops are typically thriving, potentially signaling pest infestations or disease outbreaks.
 
     \section{Methodology}
         Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series  (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
@@ -269,62 +178,63 @@ The use of plastic in agriculture has increased significantly in recent years, b
             \end{figure}
             \FloatBarrier
 
-    \subsection{Time-Series Representation}
-        In this study, we used a Multivariate Time-Series (MTS) representation, where each field is represented by multiple spectral indices (NDVI, LAI) over time. This approach captures both temporal dynamics and inter-index relationships. Given a field observed over $t$ timestamps, each vector at time $i$, $X_i$, contains $2$ features (spectral indices):
+    \subsection{Time-Series Analysis}
+        \subsubsection{Time-Series representation}
+            In this study, we used a Univariate Time-Series (UTS) representation, where each field is represented by a single spectral index (e.g., NDVI) observed over time. This approach focuses on capturing the temporal evolution and phenological patterns of a single vegetation characteristic. Given a field observed over t timestamps, the series X is defined as a sequence of scalar values:
 
-        \begin{equation}
-        X = (X_1, X_2, \ldots, X_t)
-        = \bigl(
-            (x_1^1, x_1^2),
-            (x_2^1, x_2^2),
-            \ldots,
-            (x_t^1, x_t^2)
-            \bigr)
-        \end{equation}
+            \begin{equation}
+            X = (x_1, x_2, \ldots, x_t)
+            \end{equation}
 
-        Where $X_i = (x_i^1, x_i^2)$ represents the feature vector at time $i$, with $x_i^1$ as NDVI and $x_i^2$ as LAI.
+            Where each $x_i$ represents the value of the spectral index at time $i$. Unlike multivariate approaches, this representation simplifies the analysis by focusing on the variance and trend of a single physical parameter to detect anomalies or growth stages.
 
-        \subsection{Preprocessing Sentinel-2 Imagery}
-            In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity (Fu et al., 2025). The most meaningful deviations are usually those that are significantly different from the norm.
+        \subsubsection{Time Series Components}
+        An important technique when using time series is that we can divide the data into four components: the Trend, the Seasonality, the Cyclicity and the Noise. Depending on the problem and context, these components can be analysed separately or combined to better understand the underlying patterns. In agriculture, seasonality and cyclicity are often the most informative, as crop growth and environmental conditions follow recurring patterns. In contrast, in financial markets, the trend component typically provides more insight than the others, especially for long-term analysis. The following sections provide the definitions of each component.
 
-            Preprocessing is a crucial step in machine learning and data pipelines (Tawakuli et al., 2025). It employs various techniques to ensure that the data fed into a model is clean, consistent, and informative, which directly influences its performance and reliability (Zheng et al., 2021). This is especially important in RSAD modeling. In RS imagery, data quality can be compromised by factors such as Earth's geometric effects resulting from its curvature and rotation, atmospheric conditions like cloud cover, sensor noise, seasonal variations, and landscape complexity (Fu et al., 2025).
+        \subsubsection{Anomalies in Time-Series}
+            According to Hawkings et al (1980) an anomaly is a data point or sequence that deviates from the general data distribution. In a time-series dataset, only a small fraction contains anomalies, where the majority of the data points follow expected patterns. There are different types of anomalies in time-series including global, trend, cycle and seasonal.
 
-        \subsubsection{Spectral Indices}
-
-            % Spectral vegetation indices (SVI) derived from remote sensing data provide quantitative measures of crop health and stress. These indices are particularly effective for detecting impacts of diseases and pest invasions. This research employs multiple indices to capture different aspects of plant health:
-
-                Studies from Dzurune et al. (2025), Bilintoh et al. (2019), Prabhakar et al. (2022), have demostrated the effectiveness of Normalized Difference Vegetation Index (NDVI) Enhanced Vegetation Index (EVI) and Leaf Area Index (LAI), respectively, in detecting pest infestations. Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
-
-                \begin{table}[ht]
-                \centering
-                \caption{Spectral vegetation indices and corresponding equations using Sentinel-2 bands.}
-                \label{tab:veg_indices}
-                \renewcommand{\arraystretch}{1.4}
-                \small
-                    \begin{tabular}{p{3cm} p{3cm} p{3cm}}
-                    \textbf{Index} & \textbf{Equation} & \textbf{Reference} \\
-                    \hline
-                    NDVI & 
-                    $\frac{NIR - Red}{NIR + Red}$ & 
-                    Rouse et al., 1974 \\
-
-                    EVI & 
-                    $2.5 \frac{NIR - R}{NIR + 6R - 7.5B + 1}$ & 
-                    Huete et al., 1997 \\
-
-                    LAI &
-                    $3.618 \times \text{EVI} - 0.118$ & 
-                    Boegh et al., 2002 \\
-                    \end{tabular}
-                    
-                \end{table}
-                
+            In our context, the type of anomaly that we expect to find is the cycle anomaly, which is a deviation from the expected cyclic pattern. For example, in agricultural monitoring, a cycle anomaly could indicate an unexpected drop in vegetation health during a period when crops are typically thriving, potentially signaling pest infestations or disease outbreaks.
+        
         \subsubsection{Time Series Smoothing}
         Time series smoothing is a technique used to reduce noise and improve data quality, making underlying patterns easier to analyse. In this study, we applied Triple Exponential Smoothing (TES) / Holt–Winters, which effectively models the level, trend, and seasonality components commonly present in agricultural satellite time series. \ref{appendix1} presents different smoothing techniques and its mathematical formulations.
 
+    \subsection{Preprocessing Sentinel-2 Imagery}
+        In remote-sensing data, there is a lot of different informations that deviate from normality, such as sensor noise, atmospheric effects, cloud cover, seasonal variations, and landscape complexity (Fu et al., 2025). The most meaningful deviations are usually those that are significantly different from the norm.
+
+        Preprocessing is a crucial step in machine learning and data pipelines (Tawakuli et al., 2025). It employs various techniques to ensure that the data fed into a model is clean, consistent, and informative, which directly influences its performance and reliability (Zheng et al., 2021). This is especially important in RSAD modeling. In RS imagery, data quality can be compromised by factors such as Earth's geometric effects resulting from its curvature and rotation, atmospheric conditions like cloud cover, sensor noise, seasonal variations, and landscape complexity (Fu et al., 2025).
+
+        \subsubsection{Spectral Indices}
+
+            Studies from Dzurune et al. (2025), Bilintoh et al. (2019), Prabhakar et al. (2022), have demostrated the effectiveness of Normalized Difference Vegetation Index (NDVI) Enhanced Vegetation Index (EVI) and Leaf Area Index (LAI), respectively, in detecting pest infestations. Table \ref{tab:veg_indices} presents the spectral indices used in this research, along with their mathematical formulations.
+
+            \begin{table}[ht]
+            \centering
+            \caption{Spectral vegetation indices and corresponding equations using Sentinel-2 bands.}
+            \label{tab:veg_indices}
+            \renewcommand{\arraystretch}{1.4}
+            \small
+                \begin{tabular}{p{3cm} p{3cm} p{3cm}}
+                \textbf{Index} & \textbf{Equation} & \textbf{Reference} \\
+                \hline
+                NDVI & 
+                $\frac{NIR - Red}{NIR + Red}$ & 
+                Rouse et al., 1974 \\
+
+                EVI & 
+                $2.5 \frac{NIR - R}{NIR + 6R - 7.5B + 1}$ & 
+                Huete et al., 1997 \\
+
+                LAI &
+                $3.618 \times \text{EVI} - 0.118$ & 
+                Boegh et al., 2002 \\
+                \end{tabular}
+                
+            \end{table}
+            
+
     \subsection{Anomaly Detection model}
 
-        \subsubsection{Pest Attacks}
         In order to detect pest attacks, we calculated the ration between the NDVI and time periods, if a certain decline happened outside of the harvest period or other known events, then we can consider this as an anomaly and potentially related to pest attacks. We also can use the LAI time-series maps to spatially identify areas of the field that are more affected by the pest infestation, which can help farmers to take action in specific areas of the field.
 
     \section{Results and Discussion}
@@ -390,7 +300,8 @@ The use of plastic in agriculture has increased significantly in recent years, b
                 \FloatBarrier
 
                 Based on the results presented in Figures \ref{fig:2019indiaseries}, \ref{fig:2018indiaseries}, and \ref{fig:india_lai_time_series_maps}, we can conclude that Sentinel-2 time-series analysis is a valuable tool for monitoring crop health and detecting pest infestations. The observed decline in NDVI and LAI values during the FAW infestation period indicates significant stress on the vegetation, which can be effectively captured through remote sensing techniques. These findings underscore the potential of using satellite imagery for early detection of pest outbreaks, enabling timely interventions to mitigate crop damage and improve agricultural productivity.
-                
+        
+        \subsection{FAW infestation detection in Ghana with Sentinel-2}
 
         \subsection{Anomaly Detection \& Early Alerts}
 
