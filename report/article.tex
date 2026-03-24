@@ -127,7 +127,7 @@ The use of plastic in agriculture has increased significantly in recent years, b
     \FloatBarrier
 
     \section{Methodology}
-        The project focuses on identifying anomalies in agricultural landscapes through the analysis of multi-temporal satellite imagery. The University of Sheffield hosts a prominent research group specializing in the detection and modeling of pest-driven crop degradation. Consequently, this research will be conducted in collaboration with experts in AD modeling and its practical applications in the agricultural sector. Together, we will explore the potential of applying RSAD frameworks to enhance the sensitivity and specificity of early-warning systems for crop protection.
+        The project focuses on identifying anomalies in agricultural landscapes through the analysis of multi-temporal satellite imagery. The University of Sheffield hosts a prominent research group specializing in the detection and modeling of pest-driven crop degradation, in particular Fall Armyworm (FAW). Consequently, this research will be conducted in collaboration with experts in AD modeling and its practical applications in the agricultural sector. Together, we will explore the potential of applying RSAD frameworks to enhance the sensitivity and specificity of early-warning systems for crop protection.
 
         Figure \ref{fig:abstract} illustrates the conceptual framework of FAW infestation detection. We first detect the anomaly in S2 time-series (FAW infestation), then we model an anomaly detection algorithm to identify such events, and  finally we can create alerts for farmers to take action.
 
@@ -141,6 +141,8 @@ The use of plastic in agriculture has increased significantly in recent years, b
 
     \subsection{Data and Study Regions}
         This research utilizes Harmonized Sentinel-2 (S2) Level-2A surface reflectance imagery, accessed through Google Earth Engine (GEE). The Copernicus Sentinel-2 mission consists of two polar-orbiting satellites (2A and 2B) operating in sun-synchronous orbit at 786 km altitude, phased 180° apart.
+
+        For this study, we selected two regions based on an literature review. The first is located in southern India, where \cite{prabhakar2022detecting} conducted field surveys to map Fall Armyworm (FAW) infestation sites. The second is Ejura, Ghana, a region previously mapped for FAW by \cite{bilintoh2019remote}.
 
         \subsubsection{Kurnool and Gadwal Districts, Southern India}
 
